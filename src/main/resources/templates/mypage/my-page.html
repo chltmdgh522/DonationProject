@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyDS7YweGWEUGXPRt4I9PmMScUWIJFbI2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/mypage/mypage.css" />
+  <title>마이페이지</title>
+</head>
+<body>
+<div class="container mt-5">
+  <h1>마이페이지</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile">
+        <input type="file" id="profilePicture" accept="image/*" style="display: none" />
+        <label for="profilePicture" class="upload-button">프로필 사진 업로드</label>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="user-info">
+        <form method="get" th:action th:object="${member}" class="main">
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input th:field="*{name}" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="description">본인 설명</label>
+            <input th:field="*{description}" class="form-control" readonly>
+          </div>
+          <button th:if="${loginMember.id == member.id}" id="confirmButton" class="btn btn-primary" type="button" th:onclick="|location.href='@{/my-page/edit}'|">
+            수정
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <h2>내 게시물</h2>
+    <!-- Add your post display logic here -->
+    <hr>
+    <div class="row">
+      <!-- Repeat this card structure for each post -->
+      <div class="col-md-6 mt-3" th:each="board : ${boards}">
+        <div class="card">
+          <div class="card-body">
+            <a th:href="@{/board/{id}/{boardId}(id=${board.memberId},boardId=${board.boardId})}">
+            <h3 class="card-title" th:text="${board.title}" style="font-size: 1.5em;"> <!-- Increase title font size -->
+              제목
+            </h3>
+            </a>
+            <p class="card-text" th:text="${board.content}" style="font-size: 0.9em;"> <!-- Decrease content font size -->
+              내용
+            </p>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-BL0qNZf8rWECb/BoRWoVi3YRXPB8bNMUAtEGiBX6Az8S8z2Xy5ic+2lJ+qzE5xg5" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyDS7YweGWEUGXPRt4I9PmMScUWIJFbI2" crossorigin="anonymous"></script>
+</body>
+</html>
