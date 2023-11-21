@@ -17,6 +17,8 @@ public interface BoardMapper {
 
     void updateTitleAndContent(Board board);
 
+    void updateViewCount(@Param("id") Long id, @Param("viewCount") int viewCount);
+
     Optional<Board> findByMemberIdAndBoardId(@Param("memberId")String memberId, @Param("boardId") String boardId);
 
     List<Board> findAll();

@@ -35,9 +35,18 @@ public class MyBatisBoardRepository implements BoardRepository {
     }
 
     @Override
+    public void updateViewCount(Long id,int viewCount) {
+        log.info("cnt={}",viewCount);
+        boardMapper.updateViewCount(id,viewCount
+        );
+    }
+
+
+    @Override
     public Optional<Board> findByMemberIdAndBoardId(String memberId, String boardId) {
 
-        return boardMapper.findByMemberIdAndBoardId(memberId, boardId);
+        Optional<Board> board = boardMapper.findByMemberIdAndBoardId(memberId, boardId);
+        return board;
 
     }
 

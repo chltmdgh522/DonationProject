@@ -17,4 +17,6 @@ public class Board {
 
     String memberId;
 
+    int viewCount;
+
 }

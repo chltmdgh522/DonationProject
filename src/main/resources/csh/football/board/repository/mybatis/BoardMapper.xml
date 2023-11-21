@@ -13,6 +13,10 @@
     <update id="updateTitleAndContent">
         update board set title=#{title}, content=#{content} where id=#{id}
     </update>
+
+    <update id="updateViewCount">
+        update board set view_count=#{viewCount} where id=#{id}
+    </update>
     <delete id="delete">
         delete from board where id=#{id}
     </delete>

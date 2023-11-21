@@ -67,6 +67,11 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     }
 
     @Override
+    public void updateViewCount(Long id, int viewCount) {
+
+    }
+
+    @Override
     public Optional<Board> findByMemberIdAndBoardId(String memberId, String boardId) {
         String sql = "select * from board where member_id=:memberId and board_id=:boardId";
 

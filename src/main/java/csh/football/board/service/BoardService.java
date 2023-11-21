@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -60,10 +61,19 @@ public class BoardService {
 
     //홈에서 게시판 클릭하면 게시판 보여주기 및 편집 버튼
     public Board boardCheckService(String memberId, String boardId) {
+
+
         return boardRepository.findByMemberIdAndBoardId(memberId, boardId)
                 .orElse(null);
     }
 
-
-
+    //게시물 조회수 증가
+    public void addViewCount(String memberId, String boardId) {
+        Optional<Board> board = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
+        log.info("d={}",board.get().getViewCount());
+        log.info("d={}",board.get().getViewCount()+1);
+        log.info("d={}",board.get().getId());
+        int count=board.get().getViewCount()+1;
+        boardRepository.updateViewCount(board.get().getId(),count);
+    }
 }

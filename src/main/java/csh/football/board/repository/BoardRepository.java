@@ -14,6 +14,8 @@ public interface BoardRepository {
 
     void updateTitleAndContent(Board board);
 
+    void updateViewCount(Long id, int viewCount);
+
     Optional<Board> findByMemberIdAndBoardId(String memberId, String boardId);
 
     List<Board> findAll();
