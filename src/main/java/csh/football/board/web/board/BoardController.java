@@ -58,7 +58,6 @@ public class BoardController {
                              @PathVariable String boardId,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              Model model) {
-        log.info("호출");
         //게시물 조회수 증가
         boardService.addViewCount(memberId, boardId);
 
@@ -80,7 +79,7 @@ public class BoardController {
         if (board == null) {
             return "error/4xx";
         }
-        boardRepository.delete(board);
+        boardService.delete(board);
         return "redirect:/";
     }
 

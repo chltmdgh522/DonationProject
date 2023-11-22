@@ -9,7 +9,11 @@ import csh.football.member.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,22 +44,28 @@ public class BoardService {
     // 유저의 계정 게시물마다 boardId증가
     public int addIdService(String memberId) {
         List<Board> all = boardRepository.findAll();
-        int cnt = 1;
+        int max = 1;
         if (all != null) {
             for (Board fboard : all) {
                 if (fboard.getMemberId().equals(memberId)) {
-                    cnt++;
+                    max=Math.max(max,Integer.parseInt(fboard.getBoardId()));
+                    max+=1;
                 }
             }
         }
-        return cnt;
+        return max;
     }
 
     public void boardSaveService(Member member, Board board, String memberId) {
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
-        int n = addIdService(memberId);
-        board.setBoardId(String.valueOf(n));
+        int boardId = addIdService(memberId);
+        board.setBoardId(String.valueOf(boardId));
+
+        //게시물 생성시간
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일  HH시 mm분");
+        Date date=new Date();
+        board.setDate(sdf.format(date));
         boardRepository.save(board);
     }
 
@@ -70,10 +80,12 @@ public class BoardService {
     //게시물 조회수 증가
     public void addViewCount(String memberId, String boardId) {
         Optional<Board> board = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
-        log.info("d={}",board.get().getViewCount());
-        log.info("d={}",board.get().getViewCount()+1);
-        log.info("d={}",board.get().getId());
         int count=board.get().getViewCount()+1;
         boardRepository.updateViewCount(board.get().getId(),count);
+    }
+
+    public void delete(Board board){
+
+        boardRepository.delete(board);
     }
 }

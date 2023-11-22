@@ -19,4 +19,6 @@ public class Board {
 
     int viewCount;
 
+    String date;
+
 }

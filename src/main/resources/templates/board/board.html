@@ -67,6 +67,7 @@
             <h5 class="card-title" th:text="${board.title}">게시물 제목</h5>
             <p class="card-text" th:text="${board.content}">게시물 내용</p>
             <p class="card-text" th:text="|조회수: ${board.viewCount}|"></p>
+            <p class="card-text" th:text=" ${board.date}"></p>
             <a th:href="@{/board/{id}/{boardId}/edit(id=${board.memberId},boardId=${board.boardId})}"
                class="btn-edit" th:if="${member.id==board.memberId}">수정</a>
 
