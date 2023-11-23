@@ -73,7 +73,16 @@ public class MemberRepository {
                 .addValue("id", id);
 
         template.update(sql, param);
+    }
 
+    public void updatePassword(String id, String password){
+        String sql="update member set password=:password where id=:id";
+
+        SqlParameterSource param=new MapSqlParameterSource()
+                .addValue("password",passwordEncoder.encode(password))
+                .addValue("id",id);
+
+        template.update(sql,param);
     }
 
     public Optional<Member> findByMemberId(String id) {

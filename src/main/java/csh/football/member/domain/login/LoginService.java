@@ -18,7 +18,7 @@ public class LoginService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Member login(String loginId, String password) throws SQLException {
+    public Member login(String loginId, String password){
 
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> bCryptPasswordEncoder.matches(password, m.getPassword()))
