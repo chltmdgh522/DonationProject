@@ -1,7 +1,7 @@
 package csh.football.board.repository;
 
 import csh.football.board.domain.Board;
-import csh.football.member.domain.member.Member;
+import csh.football.member.domain.mypage.MyPageMember;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +10,7 @@ public interface BoardRepository {
 
     void save(Board board);
 
-    void updateMemberName(String memberId, Member member);
+    void updateMemberName(String memberId, MyPageMember member);
 
     void updateTitleAndContent(Board board);
 

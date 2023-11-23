@@ -3,10 +3,9 @@ package csh.football.board.repository.mybatis;
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.board.repository.BoardSearchCond;
-import csh.football.member.domain.member.Member;
+import csh.football.member.domain.mypage.MyPageMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class MyBatisBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void updateMemberName(String memberId, Member member) {
+    public void updateMemberName(String memberId, MyPageMember member) {
         boardMapper.updateMemberName(memberId, member.getName());
     }
 

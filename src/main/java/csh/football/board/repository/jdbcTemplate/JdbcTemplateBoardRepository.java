@@ -3,7 +3,7 @@ package csh.football.board.repository.jdbcTemplate;
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.board.repository.BoardSearchCond;
-import csh.football.member.domain.member.Member;
+import csh.football.member.domain.mypage.MyPageMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,7 +14,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -44,7 +43,7 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void updateMemberName(String memberId, Member member) {
+    public void updateMemberName(String memberId, MyPageMember member) {
         String sql = "update board set member_name=:memberName where member_id=:memberId";
 
         SqlParameterSource param = new MapSqlParameterSource()

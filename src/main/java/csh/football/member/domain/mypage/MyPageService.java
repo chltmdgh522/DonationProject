@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MyPageService {
 
     private final BoardRepository boardRepository;
-    public void boardNameUpdate(String id, Member member){
+    public void boardNameUpdate(String id, MyPageMember member){
         boardRepository.updateMemberName(id,member);
 
     }

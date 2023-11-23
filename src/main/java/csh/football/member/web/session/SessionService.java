@@ -1,6 +1,6 @@
 package csh.football.member.web.session;
 
-import csh.football.member.domain.member.MemberRepository;
+import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

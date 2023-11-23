@@ -1,5 +1,7 @@
-package csh.football.member.domain.member;
+package csh.football.member.domain.repository;
 
+import csh.football.member.domain.member.Member;
+import csh.football.member.domain.mypage.MyPageMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -62,7 +64,7 @@ public class MemberRepository {
         template.update(sql, param);
     }
 
-    public void updateDescriptionMemberName(String id, Member member) {
+    public void updateDescriptionMemberName(String id, MyPageMember member) {
         String sql = "update member set description=:description, name=:name where id=:id";
 
         SqlParameterSource param = new MapSqlParameterSource()

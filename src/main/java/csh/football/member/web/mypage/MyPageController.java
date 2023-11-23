@@ -1,6 +1,7 @@
 package csh.football.member.web.mypage;
 
-import csh.football.member.domain.member.MemberRepository;
+import csh.football.member.domain.mypage.MyPageMember;
+import csh.football.member.domain.repository.MemberRepository;
 import csh.football.board.service.BoardService;
 import csh.football.board.domain.Board;
 import csh.football.member.domain.member.Member;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,12 +64,17 @@ public class MyPageController {
 
     @PostMapping("/edit")
     public String editMyPageHome(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-            @ModelAttribute("member") Member member) {
+            @Validated
+            @ModelAttribute("member") MyPageMember mpMember,
+            BindingResult bindingResult,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+        if(bindingResult.hasErrors()){
+            return "/mypage/my-page-edit";
+        }
         memberRepository.findByLoginId(loginMember.getLoginId())
                 .ifPresent(member1 -> {
-                    memberRepository.updateDescriptionMemberName(member1.getId(), member);
-                    myPageService.boardNameUpdate(member1.getId(), member);
+                    memberRepository.updateDescriptionMemberName(member1.getId(), mpMember);
+                    myPageService.boardNameUpdate(member1.getId(), mpMember);
                 });
         return "redirect:/";
 

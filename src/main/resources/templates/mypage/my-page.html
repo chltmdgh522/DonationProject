@@ -31,6 +31,10 @@
           <button th:if="${loginMember.id == member.id}" id="confirmButton" class="btn btn-primary" type="button" th:onclick="|location.href='@{/my-page/edit}'|">
             수정
           </button>
+          <!-- 비밀번호 변경 버튼 추가 -->
+          <button th:if="${loginMember.id == member.id}" class="btn btn-success ml-2" type="button" onclick="location.href='/change-password'">
+            비밀번호 변경
+          </button>
         </form>
       </div>
     </div>
@@ -38,19 +42,17 @@
 
   <div class="mt-5">
     <h2>내 게시물</h2>
-    <!-- Add your post display logic here -->
     <hr>
     <div class="row">
-      <!-- Repeat this card structure for each post -->
       <div class="col-md-6 mt-3" th:each="board : ${boards}">
         <div class="card">
           <div class="card-body">
             <a th:href="@{/board/{id}/{boardId}(id=${board.memberId},boardId=${board.boardId})}">
-            <h3 class="card-title" th:text="${board.title}" style="font-size: 1.5em;"> <!-- Increase title font size -->
-              제목
-            </h3>
+              <h3 class="card-title" th:text="${board.title}" style="font-size: 1.5em;">
+                제목
+              </h3>
             </a>
-            <p class="card-text" th:text="${board.content}" style="font-size: 0.9em;"> <!-- Decrease content font size -->
+            <p class="card-text" th:text="${board.content}" style="font-size: 0.9em;">
               내용
             </p>
             <hr>

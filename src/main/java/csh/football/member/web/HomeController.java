@@ -4,7 +4,7 @@ import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.board.repository.BoardSearchCond;
 import csh.football.member.domain.member.Member;
-import csh.football.member.domain.member.MemberRepository;
+import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

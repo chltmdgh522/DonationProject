@@ -5,13 +5,12 @@ package csh.football.board.service;
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.member.domain.member.Member;
-import csh.football.member.domain.member.MemberRepository;
+import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

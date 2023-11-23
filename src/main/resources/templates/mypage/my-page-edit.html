@@ -24,11 +24,13 @@
     <form action="" th:action th:object="${member}" method="post" class="main">
 
       <div>
+        <div class="field-error" th:errors="*{name}"></div>
         <label >이름</label>
         <input th:field="*{name}">
       </div>
       <div>
         <label >본인 설명</label>
+        <div class="field-error" th:errors="*{description}"></div>
         <input   th:field="*{description}">
       </div>
 
