@@ -29,8 +29,6 @@
                    th:errorclass="field-error">
             <div class="field-error" th:errors="*{password}"></div>
 
-
-
 <!--            수정 해야함  -->
             <label for="password"></label>
             <input type="password" name="pwCheck" id="pwCheck" th:field="*{passwordCheck}"
@@ -39,6 +37,11 @@
             <div class="field-error" th:errors="*{passwordCheck}"></div>
             <!--  -->
 
+            <label for="email"></label>
+            <input type="text" th:field="*{email}" placeholder="Email"
+                   class="inPutIDPWname"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{email}"></div>
 
 
             <input type="text" id="name" th:field="*{name}" class="inPutIDPWname"

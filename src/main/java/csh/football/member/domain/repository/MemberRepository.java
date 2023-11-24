@@ -35,8 +35,7 @@ public class MemberRepository {
         member.setId(UUID.randomUUID().toString());
         //중복 방지
         findByLoginId(member.getLoginId())
-                .filter(em -> em.getLoginId().equals(member.getLoginId()))
-                .map(em -> null);
+                .ifPresent(m->{});
 
         member.setPassword(passwordEncoder.encode(member.getPassword()));
 

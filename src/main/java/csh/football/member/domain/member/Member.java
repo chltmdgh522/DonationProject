@@ -1,5 +1,6 @@
 package csh.football.member.domain.member;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -8,6 +9,11 @@ import lombok.Data;
 public class Member {
 
     private String id;
+
+    @NotEmpty
+    @Email(message = "올바른 이메일이 아닙니다.")
+    private String email;
+
     @NotEmpty
     @Size(max = 16, message = "길이가 15자 이하여야 됩니다.")
     private String loginId; //로그인 ID
