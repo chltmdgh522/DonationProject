@@ -71,23 +71,23 @@ public class PasswordController {
     }
 
     @GetMapping("/forgot-password")
-    public String getForgotPassword(@ModelAttribute("forgotPassword")ForgotPassword forgotPassword){
+    public String getForgotPassword(@ModelAttribute("forgotPassword") ForgotPassword forgotPassword) {
         return "password/forgot-password";
     }
 
     @PostMapping("/forgot-password")
     public String postForgotPassword(@Validated @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
-                                     BindingResult bindingResult){
-       if(bindingResult.hasErrors()){
-           return "password/forgot-password";
-       }
+                                     BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "password/forgot-password";
+        }
         String idEmail = memberService.findIdEmail(forgotPassword);
-       if(Objects.equals(idEmail,"loginId")){
-           bindingResult.reject("err","존재하지 않은 아이디입니다.");
-           return "password/forgot-password";
-       }
-        if(Objects.equals(idEmail,"email")){
-            bindingResult.reject("err","존재하지 않은 이메일입니다.");
+        if (Objects.equals(idEmail, "loginId")) {
+            bindingResult.reject("err", "존재하지 않은 아이디입니다.");
+            return "password/forgot-password";
+        }
+        if (Objects.equals(idEmail, "email")) {
+            bindingResult.reject("err", "존재하지 않은 이메일입니다.");
             return "password/forgot-password";
         }
 
@@ -96,7 +96,7 @@ public class PasswordController {
     }
 
     @GetMapping("/new-password")
-    public String getNewPassword(@ModelAttribute("newPassword") NewPassword newPassword){
+    public String getNewPassword(@ModelAttribute("newPassword") NewPassword newPassword) {
 
         return "/password/new-password";
     }
