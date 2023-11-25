@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href="/css/addlogin/login.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <link th:href="@{/css/bootstrap.min.css}"
         href="../css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -13,44 +15,36 @@
       color: #dc3545;
     }
   </style>
+  <title>로그인</title>
 </head>
 <body>
-<div class="container">
-  <div class="py-5 text-center">
-    <h2>로그인</h2>
-  </div>
-  <form action="item.html" th:action th:object="${loginForm}" method="post">
+
+  <form id="loginForm" th:action th:object="${loginForm}" method="post" class="main">
     <div th:if="${#fields.hasGlobalErrors()}">
       <p class="field-error" th:each="err : ${#fields.globalErrors()}"
          th:text="${err}">전체 오류 메시지</p>
     </div>
     <div>
       <label for="loginId">로그인 ID</label>
-      <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
+      <input type="text" id="loginId" th:field="*{loginId}" class="inPutIDPW idid"
              th:errorclass="field-error">
       <div class="field-error" th:errors="*{loginId}" />
     </div>
     <div>
       <label for="password">비밀번호</label>
       <input type="password" id="password" th:field="*{password}"
-             class="form-control"
+             class="inPutIDPW pwpw"
              th:errorclass="field-error">
       <div class="field-error" th:errors="*{password}" />
     </div>
-    <hr class="my-4">
-    <div class="row">
-      <div class="col">
-        <button class="w-100 btn btn-primary btn-lg" type="submit">
+        <button class="btnLogin" type="submit">
           로그인</button>
+      <div class="singUpAll">
+        <a th:href="@{/members/add}" class="singUp">회원가입</a>
+
       </div>
-      <div class="col">
-        <button class="w-100 btn btn-secondary btn-lg"
-                onclick="location.href='items.html'"
-                th:onclick="|location.href='@{/}'|"
-                type="button">취소</button>
-      </div>
-    </div>
+
   </form>
-</div> <!-- /container -->
+
 </body>
 </html>

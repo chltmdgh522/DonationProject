@@ -1,14 +1,12 @@
 body{
-    background-image: url(/static/img/바다.png);
+    background-image: url(img/바다.png);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%
 }
+
 /* 머리 */
-.home{
-    font-size: 50px;
-    font-weight: 600;
-}
+
 .header{
     min-width: 328px;
     padding-top: 120px;
@@ -29,11 +27,11 @@ body{
     margin: 0 auto;
     padding-top: 50px;
 }
-.inPut_sign{
+.inPut_{
     display: flex;
     flex-direction: column;
 }
-.inPutIDPWname{
+.inPutIDPW{
     height: 56px;
     padding: 18px 12px;
     margin: 10px 0;
@@ -43,9 +41,6 @@ body{
     font-weight: 700;
     outline: 0;
 }
-.gender{
-    margin-bottom: 10px;
-}
 .btnLogin{
     width: 100%;
     color: white;
@@ -54,4 +49,27 @@ body{
     font-size: 30px;
     padding: 10px;
     display: block;
+    cursor: pointer;
+}
+
+
+
+/* 그외 */
+.singUpAll{
+    width: 100%;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.singUp{
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+.singUp:visited{
+    text-decoration: none;
+    color: gray;
 }

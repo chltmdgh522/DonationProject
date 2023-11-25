@@ -2,6 +2,8 @@ package csh.football.member.web.password;
 
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.password.ChangePassword;
+import csh.football.member.domain.password.ForgotPassword;
+import csh.football.member.domain.password.NewPassword;
 import csh.football.member.domain.service.MemberService;
 import csh.football.member.web.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,24 +41,22 @@ public class PasswordController {
                                @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            return "changepassword/change-password";
+            return "password/change-password";
         }
         Member member = memberService.findByMemberId(loginMember.getId());
-        log.info("기존={}", password.getOriginalPassword());
-        log.info("새비밀={}", password.getNewPassword());
         if (!bCryptPasswordEncoder.matches(password.getOriginalPassword(), member.getPassword())) {
             bindingResult.reject("err", "기존 비밀번호가 맞지 않습니다.");
-            return "changepassword/change-password";
+            return "password/change-password";
         }
 
         if (!Objects.equals(password.getNewPassword(), password.getNewReturnPassword())) {
             bindingResult.reject("err", "새 비빌번호가 일치하지 않습니다.");
-            return "changepassword/change-password";
+            return "password/change-password";
         }
 
         if (bCryptPasswordEncoder.matches(password.getNewPassword(), member.getPassword())) {
             bindingResult.reject("err", "새 비밀번호가 기존 비밀번호랑 일치합니다.");
-            return "changepassword/change-password";
+            return "password/change-password";
         }
 
         memberService.updatePassword(loginMember.getId(), password.getNewPassword());
@@ -68,6 +68,37 @@ public class PasswordController {
         }
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/forgot-password")
+    public String getForgotPassword(@ModelAttribute("forgotPassword")ForgotPassword forgotPassword){
+        return "password/forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String postForgotPassword(@Validated @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
+                                     BindingResult bindingResult){
+       if(bindingResult.hasErrors()){
+           return "password/forgot-password";
+       }
+        String idEmail = memberService.findIdEmail(forgotPassword);
+       if(Objects.equals(idEmail,"loginId")){
+           bindingResult.reject("err","존재하지 않은 아이디입니다.");
+           return "password/forgot-password";
+       }
+        if(Objects.equals(idEmail,"email")){
+            bindingResult.reject("err","존재하지 않은 이메일입니다.");
+            return "password/forgot-password";
+        }
+
+
+        return "redirect:/new-password";
+    }
+
+    @GetMapping("/new-password")
+    public String getNewPassword(@ModelAttribute("newPassword") NewPassword newPassword){
+
+        return "/password/new-password";
     }
 
 }

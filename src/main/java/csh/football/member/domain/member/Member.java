@@ -11,11 +11,11 @@ public class Member {
     private String id;
 
     @NotEmpty
-    @Email(message = "올바른 이메일이 아닙니다.")
+    @Email(message = "이메일 형식이 아닙니다.")
     private String email;
 
     @NotEmpty
-    @Size(max = 16, message = "길이가 15자 이하여야 됩니다.")
+    @Size(max = 16, message = "15자 이하여야 됩니다.")
     private String loginId; //로그인 ID
     @NotEmpty
     private String name; //사용자 이름
