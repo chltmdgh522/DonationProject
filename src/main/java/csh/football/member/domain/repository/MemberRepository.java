@@ -32,15 +32,8 @@ public class MemberRepository {
     }
 
     public Member save(Member member) {
-        member.setId(UUID.randomUUID().toString());
-        //중복 방지
-        findByLoginId(member.getLoginId())
-                .ifPresent(m->{});
-
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
-
-        String sql = "insert into member(id,login_id, password,name,gender,description) " +
-                "values(:id,:loginId,:password,:name,:gender,:description)";
+        String sql = "insert into member(id,login_id, password,name,gender,description,email) " +
+                "values(:id,:loginId,:password,:name,:gender,:description,:email)";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", member.getId())
@@ -48,7 +41,8 @@ public class MemberRepository {
                 .addValue("password", member.getPassword())
                 .addValue("name", member.getName())
                 .addValue("gender", member.getMemberType().getDescription())
-                .addValue("description", member.getDescription());
+                .addValue("description", member.getDescription())
+                .addValue("email", member.getEmail());
         template.update(sql, param);
         return member;
     }
@@ -74,14 +68,14 @@ public class MemberRepository {
         template.update(sql, param);
     }
 
-    public void updatePassword(String id, String password){
-        String sql="update member set password=:password where id=:id";
+    public void updatePassword(String id, String password) {
+        String sql = "update member set password=:password where id=:id";
 
-        SqlParameterSource param=new MapSqlParameterSource()
-                .addValue("password",passwordEncoder.encode(password))
-                .addValue("id",id);
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("password", passwordEncoder.encode(password))
+                .addValue("id", id);
 
-        template.update(sql,param);
+        template.update(sql, param);
     }
 
     public Optional<Member> findByMemberId(String id) {
@@ -109,6 +103,17 @@ public class MemberRepository {
         }
     }
 
+    public Optional<Member> findByEmail(String email) {
+        String sql = "select * from member where email=:email";
+
+        try {
+            Map<String, String> param = Map.of("email", email);
+            Member member = template.queryForObject(sql, param, memberRowMapper());
+            return Optional.of(member);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
     public List<Member> findAll() {
         String sql = "select * from member";
         List<Member> member = template.query(sql, memberRowMapper());

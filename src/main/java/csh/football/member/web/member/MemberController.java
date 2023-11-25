@@ -3,6 +3,7 @@ package csh.football.member.web.member;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.domain.member.MemberType;
+import csh.football.member.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ import java.util.Objects;
 @Slf4j
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     @ModelAttribute("memberType")
     public MemberType[] memberType(){
         MemberType[] values = MemberType.values();
@@ -42,9 +43,14 @@ public class MemberController {
             bindingResult.reject("addFail", "비밀번호가 일치하지 않습니다.");
             return "members/addMemberForm";
         }
-        Member addMember = memberRepository.save(member);
-        if (addMember == null) {
+
+        String save = memberService.save(member);
+        if (Objects.equals(save, "loginId")) {
             bindingResult.reject("addFail", "존재하는 아이디가 있습니다.");
+            return "members/addMemberForm";
+        }
+        if (Objects.equals(save, "email")) {
+            bindingResult.reject("addFail", "존재하는 이메일이 있습니다.");
             return "members/addMemberForm";
         }
         return "redirect:/";
