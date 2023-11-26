@@ -32,7 +32,7 @@ public class PasswordController {
                                  @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                  Model model) {
         model.addAttribute("member", loginMember);
-        return "changepassword/change-password";
+        return "password/change-password";
     }
 
     @PostMapping("/change-password")
@@ -95,7 +95,7 @@ public class PasswordController {
         return "redirect:/new-password";
     }
 
-    @GetMapping("/new-password")
+    @GetMapping("/temporary-password")
     public String getNewPassword(@ModelAttribute("newPassword") NewPassword newPassword) {
 
         return "/password/new-password";

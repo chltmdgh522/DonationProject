@@ -3,6 +3,7 @@ package csh.football.board.web.board;
 import csh.football.board.service.BoardService;
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
+import csh.football.comment.domain.Comment;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,8 @@ public class BoardController {
     public String checkBoard(@PathVariable String memberId,
                              @PathVariable String boardId,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                             Model model) {
+                             Model model,
+                             @ModelAttribute Comment comment) {
         //게시물 조회수 증가
         boardService.addViewCount(memberId, boardId);
 
@@ -65,6 +67,8 @@ public class BoardController {
         if (board == null) {
             return "error/4xx";
         }
+
+        model.addAttribute("comment",comment);
         model.addAttribute("member", loginMember);
         model.addAttribute("board", board);
         return "board/board";
