@@ -4,6 +4,7 @@ import csh.football.board.service.BoardService;
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
+import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -21,6 +24,7 @@ import java.util.Objects;
 public class BoardController {
     private final BoardRepository boardRepository; // 굳이 서비스 만들기 귀찮다...
 
+    private final JdbcTemplateCommentRepository commentRepository;
     private final BoardService boardService;
 
     //게시판 생성뷰
@@ -58,8 +62,8 @@ public class BoardController {
     public String checkBoard(@PathVariable String memberId,
                              @PathVariable String boardId,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                             Model model,
-                             @ModelAttribute Comment comment) {
+                             @ModelAttribute("comment") Comment comment,
+                             Model model) {
         //게시물 조회수 증가
         boardService.addViewCount(memberId, boardId);
 
@@ -68,7 +72,11 @@ public class BoardController {
             return "error/4xx";
         }
 
-        model.addAttribute("comment",comment);
+        Optional<Board> fboard = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
+
+        List<Comment> fcomment = commentRepository.findByBoardId(fboard.get().getId());
+        model.addAttribute("memberId",memberId);
+        model.addAttribute("fcomment",fcomment);
         model.addAttribute("member", loginMember);
         model.addAttribute("board", board);
         return "board/board";

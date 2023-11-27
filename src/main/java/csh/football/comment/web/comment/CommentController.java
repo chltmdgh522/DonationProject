@@ -1,16 +1,19 @@
 package csh.football.comment.web.comment;
 
+import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
+import csh.football.member.domain.member.Member;
+import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -23,15 +26,20 @@ public class CommentController {
 
     @PostMapping("/comment/{memberId}/{boardId}")
     public String postComment(@PathVariable String memberId,
-                              @PathVariable int boardId,
+                              @PathVariable String boardId,
                               @ModelAttribute Comment comment,
-                              Model model) {
-        boardRepository.
-        comment.setMemberId(memberId);
-        comment.setBoardId(boardId);
-        commentRepository.save(comment);
-        model.addAttribute("comment",comment);
+                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER ,required = false)Member loginMember) {
 
-        return "redirect:/board/{memberId}/{boardId}"
+        Board board = boardRepository.findByMemberIdAndBoardId(memberId, boardId).orElseThrow();
+
+
+        comment.setMemberId(loginMember.getId());
+        comment.setMemberName(loginMember.getName());
+        comment.setBoardId(board.getId());
+        commentRepository.save(comment);
+
+        //따로 아이디를 받아온 이유!
+        return "redirect:/board/{memberId}/{boardId}";
     }
+
 }
