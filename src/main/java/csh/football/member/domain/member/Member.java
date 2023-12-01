@@ -1,5 +1,6 @@
 package csh.football.member.domain.member;
 
+import ch.qos.logback.core.model.INamedModel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -28,6 +29,8 @@ public class Member {
     private String description;
 
     private MemberType memberType;
+
+    private int point;
 
     public Member(String loginId, String name, String password){
         this.loginId=loginId;

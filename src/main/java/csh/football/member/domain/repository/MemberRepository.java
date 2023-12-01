@@ -32,8 +32,8 @@ public class MemberRepository {
     }
 
     public Member save(Member member) {
-        String sql = "insert into member(id,login_id, password,name,gender,description,email) " +
-                "values(:id,:loginId,:password,:name,:gender,:description,:email)";
+        String sql = "insert into member(id,login_id, password,name,gender,description,email,point) " +
+                "values(:id,:loginId,:password,:name,:gender,:description,:email,:point)";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", member.getId())
@@ -42,7 +42,8 @@ public class MemberRepository {
                 .addValue("name", member.getName())
                 .addValue("gender", member.getMemberType().getDescription())
                 .addValue("description", member.getDescription())
-                .addValue("email", member.getEmail());
+                .addValue("email", member.getEmail())
+                .addValue("point", member.getPoint()+5000);
         template.update(sql, param);
         return member;
     }
@@ -65,6 +66,14 @@ public class MemberRepository {
                 .addValue("name", member.getName())
                 .addValue("id", id);
 
+        template.update(sql, param);
+    }
+
+    public void updatePoint(String id, Integer point) {
+        String sql = "update member set point=:point where id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("point", point);
         template.update(sql, param);
     }
 
@@ -114,6 +123,7 @@ public class MemberRepository {
             return Optional.empty();
         }
     }
+
     public List<Member> findAll() {
         String sql = "select * from member";
         List<Member> member = template.query(sql, memberRowMapper());

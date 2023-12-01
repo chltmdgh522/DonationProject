@@ -24,6 +24,10 @@ public class LoginService {
                 .filter(m -> bCryptPasswordEncoder.matches(password, m.getPassword()))
                 .orElse(null);
     }
+
+    public void point(String id, Integer point){
+        memberRepository.updatePoint(id, point);
+    }
 }
 
 

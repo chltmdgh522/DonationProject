@@ -28,6 +28,7 @@ public class LoginController {
     private final LoginService loginService;
     private final SessionService sessionService;
 
+
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm) {
         return "login/loginForm";
@@ -53,6 +54,10 @@ public class LoginController {
         Date date = new Date(session.getLastAccessedTime());
         sessionService.sessionSave(String.valueOf(date),form.getLoginId());
 
+        Integer point = loginMember.getPoint()+500;
+
+
+        loginService.point(loginMember.getId(),point);
 
         return "redirect:" + redirectURL;
     }
