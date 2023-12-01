@@ -56,6 +56,21 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        /* Custom styles for the textarea */
+        .custom-textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 100px; /* Set a minimum height */
+            border-radius: 8px; /* Add rounded corners */
+            padding: 10px; /* Add padding for better readability */
+            font-size: 16px; /* Adjust the font size */
+            border: 1px solid #ced4da; /* Add a subtle border */
+        }
+
+        /* Optional: Style for the submit button */
+        .btn-primary {
+            margin-top: 10px; /* Add some space between the textarea and the button */
+        }
+
     </style>
 </head>
 <body>
@@ -90,19 +105,25 @@
           th:object="${comment}">
         <div class="form-group">
             <label for="content">댓글 작성</label>
-            <textarea class="form-control" th:field="*{content}" rows="3" required></textarea>
+            <textarea class="form-control custom-textarea" th:field="*{content}" rows="3" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">댓글 등록</button>
     </form>
+</div>
 
     <!-- 댓글 목록 -->
     <ul class="list-group mt-3">
         <li th:each="comment : ${fcomment}" class="list-group-item">
             <p th:text="${comment.content}"></p>
-            <small class="text-muted" th:text="|${comment.memberName} ${comment.date} |"></small>
+
+            <a th:href="@{/my-page/{memberId}(memberId=${comment.memberId})}">
+                <small class="text-muted" th:text="${comment.memberName}"></small>
+            </a>
+            <small class="text-muted" th:text="${comment.date} "></small>
 
             <form th:action="@{/board/{memberId}/{boardId}/{commentId}
-            (memberId=${board.memberId}, boardId=${board.boardId}, commentId=${comment.id})}" method="post" style="display:inline;">
+            (memberId=${board.memberId}, boardId=${board.boardId}, commentId=${comment.id})}" method="post"
+                  style="display:inline;">
                 <input type="hidden" name="_method" value="delete"/>
                 <input type="submit" value="삭제" class="btn-edit" th:if="${member.id == comment.memberId}"/>
             </form>
