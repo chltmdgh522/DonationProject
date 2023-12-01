@@ -43,6 +43,13 @@ public class JdbcTemplateCommentRepository {
         return comment;
     }
 
+    public void delete(String commentId){
+        String sql = "delete from comment where id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("id", commentId);
+        jdbcTemplate.update(sql, param);
+    }
+
     RowMapper<Comment> commentRowMapper(){
         return BeanPropertyRowMapper.newInstance(Comment.class);
     }

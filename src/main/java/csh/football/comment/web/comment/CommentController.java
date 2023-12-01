@@ -28,7 +28,7 @@ public class CommentController {
     public String postComment(@PathVariable String memberId,
                               @PathVariable String boardId,
                               @ModelAttribute Comment comment,
-                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER ,required = false)Member loginMember) {
+                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
 
         Board board = boardRepository.findByMemberIdAndBoardId(memberId, boardId).orElseThrow();
 
@@ -39,6 +39,15 @@ public class CommentController {
         commentRepository.save(comment);
 
         //따로 아이디를 받아온 이유!
+        return "redirect:/board/{memberId}/{boardId}";
+    }
+
+    @DeleteMapping("/board/{memberId}/{boardId}/{commentId}")
+    public String deleteComment(@PathVariable String memberId,
+                                @PathVariable String boardId,
+                                @PathVariable String commentId) {
+        commentRepository.delete(commentId);
+
         return "redirect:/board/{memberId}/{boardId}";
     }
 

@@ -76,8 +76,8 @@
            th:method="delete"
                class="btn-edit" th:if="${member.id==board.memberId}">삭제</a> -->
             <form th:action="@{/board/{id}/{boardId}(id=${board.memberId},boardId=${board.boardId})}" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="삭제" class="btn-edit" th:if="${member.id == board.memberId}" />
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="삭제" class="btn-edit" th:if="${member.id == board.memberId}"/>
             </form>
         </div>
     </div>
@@ -86,7 +86,8 @@
 <div class="container mt-4">
     <h2 class="text-center">댓글</h2>
     <!-- 댓글 입력 폼 -->
-    <form th:action="@{/comment/{memberId}/{boardId}(memberId=${memberId},boardId=${board.boardId})}" method="post" th:object="${comment}">
+    <form th:action="@{/comment/{memberId}/{boardId}(memberId=${memberId},boardId=${board.boardId})}" method="post"
+          th:object="${comment}">
         <div class="form-group">
             <label for="content">댓글 작성</label>
             <textarea class="form-control" th:field="*{content}" rows="3" required></textarea>
@@ -100,9 +101,10 @@
             <p th:text="${comment.content}"></p>
             <small class="text-muted" th:text="|${comment.memberName} ${comment.date} |"></small>
 
-            <form th:action="@{/comment/{commentId}(commentId=${comment.id})}" method="delete" style="display:inline;">
-                <input type="hidden" name="_method" value="delete" />
-                <button type="submit" class="btn btn-danger btn-sm ml-2" th:if="${memberId == board.memberId}">삭제</button>
+            <form th:action="@{/board/{memberId}/{boardId}/{commentId}
+            (memberId=${board.memberId}, boardId=${board.boardId}, commentId=${comment.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="삭제" class="btn-edit" th:if="${member.id == comment.memberId}"/>
             </form>
         </li>
     </ul>
