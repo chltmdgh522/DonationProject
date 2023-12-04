@@ -1,7 +1,6 @@
 package csh.football.board.service;
 
 
-
 import csh.football.board.domain.Board;
 import csh.football.board.repository.BoardRepository;
 import csh.football.member.domain.member.Member;
@@ -47,25 +46,28 @@ public class BoardService {
         if (all != null) {
             for (Board fboard : all) {
                 if (fboard.getMemberId().equals(memberId)) {
-                    max=Math.max(max,Integer.parseInt(fboard.getBoardId()));
-                    max+=1;
+                    max = Math.max(max, Integer.parseInt(fboard.getBoardId()));
+                    max += 1;
                 }
             }
         }
         return max;
     }
 
-    public void boardSaveService(Member member, Board board, String memberId) {
+    public void boardSaveService(Member member, Board board) {
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
-        int boardId = addIdService(memberId);
+        int boardId = addIdService(member.getId());
         board.setBoardId(String.valueOf(boardId));
 
         //게시물 생성시간
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일  HH시 mm분");
-        Date date=new Date();
+        Date date = new Date();
         board.setDate(sdf.format(date));
         boardRepository.save(board);
+
+        //게시물 생성할때 포인트 점수 100
+        memberRepository.updatePoint(member.getId(), member.getPoint() + 100);
     }
 
     //홈에서 게시판 클릭하면 게시판 보여주기 및 편집 버튼
@@ -79,11 +81,11 @@ public class BoardService {
     //게시물 조회수 증가
     public void addViewCount(String memberId, String boardId) {
         Optional<Board> board = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
-        int count=board.get().getViewCount()+1;
-        boardRepository.updateViewCount(board.get().getId(),count);
+        int count = board.get().getViewCount() + 1;
+        boardRepository.updateViewCount(board.get().getId(), count);
     }
 
-    public void delete(Board board){
+    public void delete(Board board) {
 
         boardRepository.delete(board);
     }

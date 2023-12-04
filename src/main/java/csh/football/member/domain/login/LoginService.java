@@ -18,15 +18,16 @@ public class LoginService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Member login(String loginId, String password){
+    public Member login(String loginId, String password) {
 
         return memberRepository.findByLoginId(loginId)
                 .filter(m -> bCryptPasswordEncoder.matches(password, m.getPassword()))
                 .orElse(null);
     }
 
-    public void point(String id, Integer point){
-        memberRepository.updatePoint(id, point);
+    public void point(Member loginMember) {
+        Integer point = loginMember.getPoint() + 100;
+        memberRepository.updatePoint(loginMember.getId(), point);
     }
 }
 

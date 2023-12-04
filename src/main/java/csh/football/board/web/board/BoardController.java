@@ -53,7 +53,7 @@ public class BoardController {
         if (member == null) {
             return "/error/4xx";
         }
-        boardService.boardSaveService(member, board, memberId);
+        boardService.boardSaveService(member, board);
         return "redirect:/";
     }
 

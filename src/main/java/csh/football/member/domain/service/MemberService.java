@@ -32,6 +32,7 @@ public class MemberService {
         }
         member.setId(UUID.randomUUID().toString());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
+        member.setPoint(1000);
         memberRepository.save(member);
 
         return null;

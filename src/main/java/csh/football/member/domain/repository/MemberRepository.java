@@ -43,7 +43,7 @@ public class MemberRepository {
                 .addValue("gender", member.getMemberType().getDescription())
                 .addValue("description", member.getDescription())
                 .addValue("email", member.getEmail())
-                .addValue("point", member.getPoint()+5000);
+                .addValue("point", member.getPoint());
         template.update(sql, param);
         return member;
     }

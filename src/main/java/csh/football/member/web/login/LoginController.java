@@ -54,10 +54,8 @@ public class LoginController {
         Date date = new Date(session.getLastAccessedTime());
         sessionService.sessionSave(String.valueOf(date),form.getLoginId());
 
-        Integer point = loginMember.getPoint()+500;
-
-
-        loginService.point(loginMember.getId(),point);
+        //포인트 점수 50점
+        loginService.point(loginMember);
 
         return "redirect:" + redirectURL;
     }
