@@ -1,8 +1,8 @@
-package csh.football.board.repository.mybatis;
+package csh.football.board.domain.repository.mybatis;
 
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardRepository;
-import csh.football.board.repository.BoardSearchCond;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardRepository;
+import csh.football.board.domain.repository.BoardSearchCond;
 import csh.football.member.domain.mypage.MyPageMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

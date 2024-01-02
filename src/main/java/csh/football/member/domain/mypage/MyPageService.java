@@ -1,7 +1,6 @@
 package csh.football.member.domain.mypage;
 
-import csh.football.board.repository.BoardRepository;
-import csh.football.member.domain.member.Member;
+import csh.football.board.domain.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

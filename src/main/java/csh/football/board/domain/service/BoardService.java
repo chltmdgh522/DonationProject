@@ -1,8 +1,8 @@
-package csh.football.board.service;
+package csh.football.board.domain.service;
 
 
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardRepository;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

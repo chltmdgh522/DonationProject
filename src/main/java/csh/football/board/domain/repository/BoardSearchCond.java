@@ -1,4 +1,4 @@
-package csh.football.board.repository;
+package csh.football.board.domain.repository;
 
 import lombok.Data;
 

@@ -1,8 +1,7 @@
-package csh.football.board.repository.mybatis;
+package csh.football.board.domain.repository.mybatis;
 
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardSearchCond;
-import csh.football.member.domain.member.Member;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardSearchCond;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

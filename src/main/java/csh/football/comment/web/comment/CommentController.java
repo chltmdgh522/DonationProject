@@ -1,19 +1,15 @@
 package csh.football.comment.web.comment;
 
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardRepository;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Controller
 @Slf4j

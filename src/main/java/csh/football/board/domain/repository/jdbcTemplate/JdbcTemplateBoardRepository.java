@@ -1,8 +1,8 @@
-package csh.football.board.repository.jdbcTemplate;
+package csh.football.board.domain.repository.jdbcTemplate;
 
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardRepository;
-import csh.football.board.repository.BoardSearchCond;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardRepository;
+import csh.football.board.domain.repository.BoardSearchCond;
 import csh.football.member.domain.mypage.MyPageMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;

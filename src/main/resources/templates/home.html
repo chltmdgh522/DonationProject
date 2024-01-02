@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .counter {
+            font-size: 18px; /* 글자 크기 조절 */
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
+            color: #bbb; /* 약간 흐린 회색으로 변경 */
+        }
+    </style>
 </head>
 <body>
 <div class="container" style="max-width: 600px">
@@ -27,6 +35,12 @@
     </div>
     <hr class="my-4">
 </div> <!-- /container -->
+
+<div class="container" th:object="${visit}">
+    <div class="counter" id="totalCounter" th:text="|total: ${visit.get().total}|">총 방문자 수: 100</div>
+    <div class="counter" id="todayCounter" th:text="|today: ${visit.get().today}|">오늘 방문자 수: 10</div>
+</div>
+
 
 
 </body>

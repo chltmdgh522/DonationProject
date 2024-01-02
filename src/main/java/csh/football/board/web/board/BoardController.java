@@ -1,8 +1,8 @@
 package csh.football.board.web.board;
 
-import csh.football.board.service.BoardService;
-import csh.football.board.domain.Board;
-import csh.football.board.repository.BoardRepository;
+import csh.football.board.domain.service.BoardService;
+import csh.football.board.domain.board.Board;
+import csh.football.board.domain.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;

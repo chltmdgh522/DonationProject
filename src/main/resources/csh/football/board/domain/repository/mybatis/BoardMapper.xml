@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="csh.football.board.repository.mybatis.BoardMapper">
+<mapper namespace="csh.football.board.domain.repository.mybatis.BoardMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into board(board_id,title,content, member_id,member_name,date)

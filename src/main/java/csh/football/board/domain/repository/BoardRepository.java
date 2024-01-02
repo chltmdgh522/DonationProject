@@ -1,6 +1,6 @@
-package csh.football.board.repository;
+package csh.football.board.domain.repository;
 
-import csh.football.board.domain.Board;
+import csh.football.board.domain.board.Board;
 import csh.football.member.domain.mypage.MyPageMember;
 
 import java.util.List;

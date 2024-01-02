@@ -2,8 +2,8 @@ package csh.football.member.web.mypage;
 
 import csh.football.member.domain.mypage.MyPageMember;
 import csh.football.member.domain.repository.MemberRepository;
-import csh.football.board.service.BoardService;
-import csh.football.board.domain.Board;
+import csh.football.board.domain.service.BoardService;
+import csh.football.board.domain.board.Board;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.mypage.MyPageService;
 import csh.football.member.web.session.SessionConst;

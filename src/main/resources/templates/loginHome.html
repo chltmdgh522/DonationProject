@@ -66,5 +66,10 @@
   </button>
 
 </div> <!-- /container -->
+
+<div class="container" th:object="${visit}">
+  <div class="counter" id="totalCounter" th:text="|total: ${visit.get().total}|">총 방문자 수: 100</div>
+  <div class="counter" id="todayCounter" th:text="|today: ${visit.get().today}|">오늘 방문자 수: 10</div>
+</div>
 </body>
 </html>
