@@ -21,4 +21,6 @@ public class Board {
 
     String date;
 
+    char update;
+
 }
