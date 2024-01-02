@@ -3,6 +3,7 @@ package csh.football.board.domain.service;
 
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
+import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
+    private final JdbcTemplateCommentRepository commentRepository;
 
     //마이페이지에서 해당유저 게시물 보여주기
     public List<Board> userCheckService(String memberId) {
@@ -86,7 +88,8 @@ public class BoardService {
     }
 
     public void delete(Board board) {
-
+        commentRepository.deleteBoard(board.getBoardId());
         boardRepository.delete(board);
+
     }
 }

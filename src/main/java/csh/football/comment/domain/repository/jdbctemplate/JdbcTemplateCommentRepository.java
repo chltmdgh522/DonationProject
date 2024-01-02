@@ -43,6 +43,15 @@ public class JdbcTemplateCommentRepository {
         return comment;
     }
 
+    //게시판 한번에 삭제할려고 왜냐면 외래키 때문에 오류남
+    public void deleteBoard(String boardId){
+        String sql = "delete from comment where board_id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("id", boardId);
+        jdbcTemplate.update(sql, param);
+    }
+
+
     public void delete(String commentId){
         String sql = "delete from comment where id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
