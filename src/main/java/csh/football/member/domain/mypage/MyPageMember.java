@@ -3,6 +3,7 @@ package csh.football.member.domain.mypage;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class MyPageMember {
@@ -12,4 +13,8 @@ public class MyPageMember {
 
     @NotEmpty
     String description;
+
+
+    MultipartFile profileImage;
+
 }

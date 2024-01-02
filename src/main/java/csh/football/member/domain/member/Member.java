@@ -1,10 +1,13 @@
 package csh.football.member.domain.member;
 
 import ch.qos.logback.core.model.INamedModel;
+import csh.football.member.domain.mypage.UploadFile;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class Member {
@@ -31,6 +34,8 @@ public class Member {
     private MemberType memberType;
 
     private int point;
+
+    private String profile;
 
     public Member(String loginId, String name, String password){
         this.loginId=loginId;

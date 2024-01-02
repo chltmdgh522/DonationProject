@@ -58,12 +58,14 @@ public class MemberRepository {
         template.update(sql, param);
     }
 
-    public void updateDescriptionMemberName(String id, MyPageMember member) {
-        String sql = "update member set description=:description, name=:name where id=:id";
+    public void updateDescriptionMemberNameProfile(String id, Member member) {
+        String sql = "update member set description=:description, name=:name, profile=:profile" +
+                " where id=:id";
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("description", member.getDescription())
                 .addValue("name", member.getName())
+                .addValue("profile",member.getProfile())
                 .addValue("id", id);
 
         template.update(sql, param);
@@ -93,6 +95,7 @@ public class MemberRepository {
         try {
             Map<String, String> param = Map.of("id", id);
             Member member = template.queryForObject(sql, param, memberRowMapper());
+            log.info("repository={}",member.getProfile());
             return Optional.of(member);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
