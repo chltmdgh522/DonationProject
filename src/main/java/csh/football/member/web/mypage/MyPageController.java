@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/my-page")
@@ -102,7 +104,13 @@ public class MyPageController {
     @ResponseBody
     @GetMapping("/images/{filename}")
     public Resource profileImage(@PathVariable String filename) throws MalformedURLException {
-        log.info("gdgdgd");
         return new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+
+    @ResponseBody
+    @GetMapping("/imagesV2/{memberId}")
+    public Resource profileImageV2(@PathVariable String memberId) throws MalformedURLException{
+        Optional<Member> member = memberRepository.findByMemberId(memberId);
+        return new UrlResource("file:" + fileStore.getFullPath(member.get().getProfile()));
     }
 }

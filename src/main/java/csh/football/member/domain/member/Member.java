@@ -35,6 +35,8 @@ public class Member {
 
     private int point;
 
+    private int totalGivePoint;
+
     private String profile;
 
     public Member(String loginId, String name, String password){

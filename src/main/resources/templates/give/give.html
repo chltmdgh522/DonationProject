@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>기부 양식</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h2>기부 양식</h2>
+
+<form th:action method="post" th:object="${give}" onsubmit="return checkDonationAmount()">
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" th:value="${member.get().name}" disabled/>
+
+    <label for="email">이메일:</label>
+    <input type="email" id="email" name="email" th:value="${member.get().email}" disabled/>
+
+    <label for="donationRange">기부액 선택 (드래그 앤 드롭):</label>
+    <input
+            type="range"
+            id="givePoint"
+            name="givePoint"
+            th:field="*{givePoint}"
+            min="1"
+            th:max="${member.get().point}"
+            step="1"
+            th:value="${member.get().point}"
+            oninput="updateDonationValue()"
+    />
+    <span id="donationValue">1</span> 원
+
+    <label for="purpose">기부 목적 (선택적)</label>
+    <textarea id="giveText" name="giveText" th:field="*{giveText}" rows="3"></textarea>
+
+    <button type="submit">기부하기</button>
+</form>
+
+<script th:inline="javascript">
+    function checkDonationAmount() {
+        var donationAmount = document.getElementById('givePoint').value;
+        if (donationAmount <= 100) {
+            alert('기부액은 100원 이상이어야 합니다.');
+            return false;
+        }
+        alert('기부해주셔서 감사합니다!!');
+        return true;
+    }
+
+    function updateDonationValue() {
+        var donationRange = document.getElementById('givePoint');
+        var donationValue = document.getElementById('donationValue');
+        donationValue.innerHTML = donationRange.value;
+    }
+</script>
+</body>
+</html>

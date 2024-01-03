@@ -65,7 +65,7 @@ public class MemberRepository {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("description", member.getDescription())
                 .addValue("name", member.getName())
-                .addValue("profile",member.getProfile())
+                .addValue("profile", member.getProfile())
                 .addValue("id", id);
 
         template.update(sql, param);
@@ -73,6 +73,14 @@ public class MemberRepository {
 
     public void updatePoint(String id, Integer point) {
         String sql = "update member set point=:point where id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("point", point);
+        template.update(sql, param);
+    }
+
+    public void updateTotalGivePoint(String id, Integer point) {
+        String sql = "update member set total_give_point=:point where id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", id)
                 .addValue("point", point);
@@ -95,7 +103,7 @@ public class MemberRepository {
         try {
             Map<String, String> param = Map.of("id", id);
             Member member = template.queryForObject(sql, param, memberRowMapper());
-            log.info("repository={}",member.getProfile());
+            log.info("repository={}", member.getProfile());
             return Optional.of(member);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -125,6 +133,12 @@ public class MemberRepository {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public List<Member> findTotalGivePoint() {
+        String sql = "select * from member order by total_give_point desc limit 5";
+        List<Member> member = template.query(sql, memberRowMapper());
+        return member;
     }
 
     public List<Member> findAll() {

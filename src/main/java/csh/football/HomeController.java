@@ -43,9 +43,11 @@ public class HomeController {
         memberRepository.findByLoginId(loginMember.getLoginId())
                 .ifPresent(member -> model.addAttribute("member", member));
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
+        List<Member> pointMember = memberRepository.findTotalGivePoint();
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("board", boards);
         model.addAttribute("visit",visit);
+        model.addAttribute("pointMember",pointMember);
         return "loginHome";
     }
 

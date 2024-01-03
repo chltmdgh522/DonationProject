@@ -22,6 +22,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/board/{memberId}")
 public class BoardController {
+    int num = 0;
+
     private final BoardRepository boardRepository; // 굳이 서비스 만들기 귀찮다...
 
     private final JdbcTemplateCommentRepository commentRepository;
@@ -71,12 +73,17 @@ public class BoardController {
         if (board == null) {
             return "error/4xx";
         }
+        if (board.getUpdate() == 'M') {
+            model.addAttribute("update", "(수정됨)");
+        }
+
 
         Optional<Board> fboard = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
 
         List<Comment> fcomment = commentRepository.findByBoardId(fboard.get().getId());
-        model.addAttribute("memberId",memberId);
-        model.addAttribute("fcomment",fcomment);
+
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("fcomment", fcomment);
         model.addAttribute("member", loginMember);
         model.addAttribute("board", board);
         return "board/board";
@@ -120,7 +127,12 @@ public class BoardController {
         }
         board.setTitle(fboard.getTitle());
         board.setContent(fboard.getContent());
+        if (board.getUpdate() == 'X') {
+            board.setUpdate('M');
+        }
         boardRepository.updateTitleAndContent(board);
+
+
         return "redirect:/board/{memberId}/{boardId}";
     }
 }

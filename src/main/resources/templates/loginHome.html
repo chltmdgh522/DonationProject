@@ -18,7 +18,8 @@
       </button>
     </div>
     <div class="col">
-      <button class="w-100 btn btn-secondary btn-lg" type="button" th:onclick="|location.href='@{/my-page/{id}(id=${member.id})}'|">
+      <button class="w-100 btn btn-secondary btn-lg" type="button"
+              th:onclick="|location.href='@{/my-page/{id}(id=${member.id})}'|">
         마이페이지
       </button>
     </div>
@@ -30,40 +31,60 @@
       </form>
     </div>
   </div>
-  <hr class="my-4">
-  <!-- 게시판 검색 폼 -->
-  <form method="get" th:object="${boardSearchCond}">
-    <div class="input-group mb-3">
-      <!-- 작성자 검색 -->
-      <input type="text" th:field="*{memberName}"  class="form-control" placeholder="작성자 검색" aria-label="작성자 검색" aria-describedby="button-search">
-      <!-- 게시판 제목 검색 -->
-      <input type="text"  th:field="*{title}"  class="form-control" placeholder="게시판 제목 검색" aria-label="게시판 제목 검색" aria-describedby="button-search">
 
-      <button class="btn btn-outline-secondary" type="submit" id="button-search">검색</button>
-    </div>
-  </form>
-
-  <!-- 게시판 목록 -->
   <table class="table">
     <thead>
     <tr>
-      <th >작성자</th>
-      <th >게시물</th>
+      <th>이름</th>
+      <th>기부 포인트</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="boards : ${board}">
-      <td><a  th:text="${boards.memberName}" th:href="@{/my-page/{id}(id=${boards.memberId})}">회원 이름</a></td>
-      <td><a  th:text="${boards.title}" th:href="@{/board/{id}/{boardId}(id=${boards.memberId},boardId=${boards.boardId})}" >게시물 제목</a></td>
+    <tr th:each="member : ${pointMember}">
+      <td><a th:text="${member.name}" th:href="@{/my-page/{id}(id=${member.id})}">회원 이름</a></td>
+      <td th:text="${member.totalGivePoint + '원'}"></td>
     </tr>
     </tbody>
-
-    <!-- 추가적인 게시판 목록 항목을 필요한 만큼 반복 -->
   </table>
-  <button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/{id}(id=${member.id})}'|">
 
-    글쓰기
-  </button>
+    <hr class="my-4">
+    <!-- 게시판 검색 폼 -->
+    <form method="get" th:object="${boardSearchCond}">
+      <div class="input-group mb-3">
+        <!-- 작성자 검색 -->
+        <input type="text" th:field="*{memberName}" class="form-control" placeholder="작성자 검색"
+               aria-label="작성자 검색" aria-describedby="button-search">
+        <!-- 게시판 제목 검색 -->
+        <input type="text" th:field="*{title}" class="form-control" placeholder="게시판 제목 검색"
+               aria-label="게시판 제목 검색" aria-describedby="button-search">
+
+        <button class="btn btn-outline-secondary" type="submit" id="button-search">검색</button>
+      </div>
+    </form>
+
+    <!-- 게시판 목록 -->
+    <table class="table">
+      <thead>
+      <tr>
+        <th>작성자</th>
+        <th>게시물</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="boards : ${board}">
+        <td><a th:text="${boards.memberName}" th:href="@{/my-page/{id}(id=${boards.memberId})}">회원 이름</a></td>
+        <td><a th:text="${boards.title}"
+               th:href="@{/board/{id}/{boardId}(id=${boards.memberId},boardId=${boards.boardId})}">게시물 제목</a>
+        </td>
+      </tr>
+      </tbody>
+
+      <!-- 추가적인 게시판 목록 항목을 필요한 만큼 반복 -->
+    </table>
+    <button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/{id}(id=${member.id})}'|">
+
+      글쓰기
+    </button>
 
 </div> <!-- /container -->
 
@@ -71,5 +92,7 @@
   <div class="counter" id="totalCounter" th:text="|total: ${visit.get().total}|">총 방문자 수: 100</div>
   <div class="counter" id="todayCounter" th:text="|today: ${visit.get().today}|">오늘 방문자 수: 10</div>
 </div>
+
+
 </body>
 </html>
