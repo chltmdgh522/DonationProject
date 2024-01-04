@@ -19,11 +19,16 @@
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용</label>
-      <textarea class="form-control" id="content" name="content" rows="4" th:field="*{content}"
-                required></textarea>
+      <textarea class="form-control" id="content" name="content" rows="4" th:field="*{content}" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary"
-            th:onclick="|location.href='@{/board/{id}(id=${board.memberId})}'|">게시</button>
+
+    <!-- 기부 체크박스 -->
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" th:field="*{boardType}">
+      <label class="form-check-label">기부게시판</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary" th:onclick="|location.href='@{/board/{id}(id=${board.memberId})}'|">게시</button>
   </form>
 
 </div> <!-- /container -->

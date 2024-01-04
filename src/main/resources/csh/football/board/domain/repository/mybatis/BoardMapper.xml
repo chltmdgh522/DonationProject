@@ -4,8 +4,8 @@
 <mapper namespace="csh.football.board.domain.repository.mybatis.BoardMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into board(board_id,title,content, member_id,member_name,date)
-        values(#{boardId},#{title},#{content},#{memberId},#{memberName},#{date})
+        insert into board(board_id,title,content, member_id,member_name,date,board_type)
+        values(#{boardId},#{title},#{content},#{memberId},#{memberName},#{date},#{boardType})
     </insert>
     <update id="updateMemberName">
         update board set member_name=#{memberName} where member_id=#{memberId}

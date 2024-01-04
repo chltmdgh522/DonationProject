@@ -3,11 +3,15 @@ package csh.football.board.domain.service;
 
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
+import csh.football.board.domain.repository.jpa.JpaBoardRepository;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +27,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final JdbcTemplateCommentRepository commentRepository;
+    private final JpaBoardRepository jpaBoardRepository;
 
     //마이페이지에서 해당유저 게시물 보여주기
     public List<Board> userCheckService(String memberId) {
@@ -85,6 +90,13 @@ public class BoardService {
         Optional<Board> board = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
         int count = board.get().getViewCount() + 1;
         boardRepository.updateViewCount(board.get().getId(), count);
+    }
+
+
+    //페이징
+    public Page<Board> getList(int page){
+        Pageable pageable = PageRequest.of(page, 5);
+        return jpaBoardRepository.findAll(pageable);
     }
 
     public void delete(Board board) {

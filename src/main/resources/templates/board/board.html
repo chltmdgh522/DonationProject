@@ -100,7 +100,7 @@
 </div>
 
 <form th:action="@{/give/{id}(id=${board.id})}" method="get">
-    <input type="submit" value="기부하기" class="btn-edit"/>
+    <input type="submit" value="기부하기" class="btn-edit"  th:if="${board.boardType}" />
 </form>
 
 <div class="container mt-4">
