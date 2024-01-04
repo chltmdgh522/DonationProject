@@ -49,6 +49,12 @@ public class MyBatisBoardRepository implements BoardRepository {
     }
 
     @Override
+    public Optional<Board> findById(Long id) {
+        Optional<Board> board = boardMapper.findById(id);
+        return board;
+    }
+
+    @Override
     public List<Board> findAll() {
         return boardMapper.findAll();
     }

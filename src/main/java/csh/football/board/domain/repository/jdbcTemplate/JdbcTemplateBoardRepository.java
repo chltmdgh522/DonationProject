@@ -84,6 +84,11 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     }
 
     @Override
+    public Optional<Board> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<Board> findAll() {
         String sql = "select * from board";
         return jdbcTemplate.query(sql, boardRowMapper());

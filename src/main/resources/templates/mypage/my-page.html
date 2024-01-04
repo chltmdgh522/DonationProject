@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group" th:if="${loginMember.id==member.id}">
-                        <span th:text="|${member.getPoint()} 점|"></span>
+                        <span th:text="|포인트: ${member.point}점  기부 포인트: ${member.totalGivePoint}점|"></span>
                     </div>
                     <button th:if="${loginMember.id == member.id}" id="confirmButton" class="btn btn-primary"
                             type="button" th:onclick="|location.href='@{/my-page/edit}'|">

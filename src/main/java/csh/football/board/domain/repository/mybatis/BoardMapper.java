@@ -20,6 +20,7 @@ public interface BoardMapper {
 
     Optional<Board> findByMemberIdAndBoardId(@Param("memberId")String memberId, @Param("boardId") String boardId);
 
+    Optional<Board> findById(Long id);
     List<Board> findAll();
 
     List<Board> findSearchAll(BoardSearchCond boardSearchCond);

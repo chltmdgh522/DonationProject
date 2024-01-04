@@ -23,6 +23,11 @@
     <select id="findByMemberIdAndBoardId" resultType="Board">
         select * from board where member_id=#{memberId} and board_id=#{boardId}
     </select>
+
+    <select id="findById" resultType="Board">
+        select * from board where id=#{id}
+    </select>
+
     <select id="findAll" resultType="board">
         select * from board
     </select>

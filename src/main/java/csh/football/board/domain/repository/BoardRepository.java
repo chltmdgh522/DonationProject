@@ -19,6 +19,8 @@ public interface BoardRepository {
 
     Optional<Board> findByMemberIdAndBoardId(String memberId, String boardId);
 
+    Optional<Board> findById(Long id);
+
     List<Board> findAll();
 
     List<Board> findSearchAll(BoardSearchCond boardSearchCond);

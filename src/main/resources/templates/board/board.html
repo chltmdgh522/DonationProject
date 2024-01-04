@@ -99,7 +99,7 @@
     </div>
 </div>
 
-<form th:action="@{/give/{id}/{memberId}(id=${board.id},memberId=${memberId})}" method="get">
+<form th:action="@{/give/{id}(id=${board.id})}" method="get">
     <input type="submit" value="기부하기" class="btn-edit"/>
 </form>
 
