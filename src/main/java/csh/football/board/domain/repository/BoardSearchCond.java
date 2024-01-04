@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class BoardSearchCond {
 
-    String memberName;
+    String memberName="";
 
-    String title;
+    String title="";
 
 }

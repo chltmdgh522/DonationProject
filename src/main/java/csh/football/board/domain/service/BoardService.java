@@ -3,6 +3,7 @@ package csh.football.board.domain.service;
 
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
+import csh.football.board.domain.repository.BoardSearchCond;
 import csh.football.board.domain.repository.jpa.JpaBoardRepository;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
@@ -12,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,9 +97,19 @@ public class BoardService {
 
 
     //페이징
-    public Page<Board> getList(int page){
-        Pageable pageable = PageRequest.of(page, 5);
-        return jpaBoardRepository.findAll(pageable);
+    public Page<Board> getList(String memberName, String title, int page) {
+
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("date"));
+        Pageable pageable = PageRequest.of(page, 5,Sort.by(sorts));
+        log.info("a={}",memberName);
+        log.info("b={}",title);
+
+        if(memberName.equals("") && title.equals("")){
+            return jpaBoardRepository.findAll(pageable);
+        }
+
+        return jpaBoardRepository.findByMemberNameContainingAndTitleContaining(memberName, title, pageable);
     }
 
     public void delete(Board board) {
