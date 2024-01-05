@@ -17,6 +17,8 @@ import java.util.UUID;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     public String save(Member member){
@@ -25,11 +27,14 @@ public class MemberService {
         if (fmember.isPresent()) {
             return "loginId";
         }
+
         //이메일 중복 방지
         Optional<Member> emember = memberRepository.findByEmail(member.getEmail());
         if (emember.isPresent()) {
             return "email";
         }
+
+
         member.setId(UUID.randomUUID().toString());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setPoint(1000);

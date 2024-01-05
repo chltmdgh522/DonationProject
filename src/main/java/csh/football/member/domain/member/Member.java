@@ -39,6 +39,8 @@ public class Member {
 
     private String profile;
 
+    private String role;
+
     public Member(String loginId, String name, String password){
         this.loginId=loginId;
         this.name=name;

@@ -1,7 +1,6 @@
 package csh.football.member.domain.repository;
 
 import csh.football.member.domain.member.Member;
-import csh.football.member.domain.mypage.MyPageMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -24,6 +23,7 @@ import java.util.UUID;
 public class MemberRepository {
 
     private final BCryptPasswordEncoder passwordEncoder;
+
     private final NamedParameterJdbcTemplate template;
 
     MemberRepository(DataSource dataSource, BCryptPasswordEncoder passwordEncoder) {
@@ -32,8 +32,16 @@ public class MemberRepository {
     }
 
     public Member save(Member member) {
-        String sql = "insert into member(id,login_id, password,name,gender,description,email,point) " +
-                "values(:id,:loginId,:password,:name,:gender,:description,:email,:point)";
+
+        if(member.getLoginId().equals("chltmdgh522")){
+            member.setRole("O");
+        }else{
+            member.setRole("X");
+        }
+
+        String sql = "insert into member(id,login_id, password,name,gender,description,email,point,role) " +
+                "values(:id,:loginId,:password,:name,:gender,:description,:email,:point,:role)";
+
 
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", member.getId())
@@ -43,7 +51,8 @@ public class MemberRepository {
                 .addValue("gender", member.getMemberType().getDescription())
                 .addValue("description", member.getDescription())
                 .addValue("email", member.getEmail())
-                .addValue("point", member.getPoint());
+                .addValue("point", member.getPoint())
+                .addValue("role", member.getRole());
         template.update(sql, param);
         return member;
     }

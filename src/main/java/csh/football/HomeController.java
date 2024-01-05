@@ -1,5 +1,4 @@
 package csh.football;
-
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
 import csh.football.board.domain.repository.BoardSearchCond;
@@ -49,7 +48,6 @@ public class HomeController {
 
         String memberName = boardSearchCond.getMemberName();
         String title = boardSearchCond.getTitle();
-
 
         Page<Board> paging = boardService.getList(memberName, title, page);
 

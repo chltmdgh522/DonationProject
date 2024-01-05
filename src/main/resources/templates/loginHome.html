@@ -23,6 +23,12 @@
                 마이페이지
             </button>
         </div>
+        <div class="col mt-3" th:if="${member.role}=='O'">
+            <button class="w-100 btn btn-info btn-lg" type="button" th:onclick="|location.href='@{/admin}'|">
+                관리자 페이지
+            </button>
+        </div>
+
         <div class="col">
             <form th:action="@{/logout}" method="post">
                 <button class="w-100 btn btn-dark btn-lg" type="submit">
