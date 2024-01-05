@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 관리</title>
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="text-center">
+<div class="container">
+    <h2 class="my-4">회원 관리</h2>
+    <hr class="my-4">
+
+    <!-- 게시판 검색 폼 -->
+    <form method="get" th:object="${memberSearchCond}">
+        <div class="input-group mb-3">
+            <!-- 작성자 검색 -->
+            <input type="text" th:field="*{loginId}" class="form-control" placeholder="사용자 아이디 검색"
+                   aria-label="사용자 아이디 검색" aria-describedby="button-search">
+            <button class="btn btn-outline-secondary" type="submit" id="button-search">검색</button>
+        </div>
+    </form>
+
+    <!-- 게시판 목록 -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>회원 번호</th>
+            <th>회원 아이디</th>
+            <th>회원 이름</th>
+            <th>회원 E-mail</th>
+            <th>회원 포인트</th>
+            <th>회원 기부 포인트</th>
+            <th>회원 계정 삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member,loop : ${paging}">
+            <td th:text="${(paging.number * paging.size) + loop.index +1}"></td>
+            <td><a th:text="${member.loginId}"></a></td>
+            <td th:text="${member.name}"></td>
+            <td><a th:text="${member.email}">회원 이메일</a></td>
+            <td th:text="${member.point}"></td>
+            <td th:text="${member.totalGivePoint}"></td>
+            <td>
+                <form th:action="@{/admin/{loginId}(loginId=${member.loginId})}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="submit" value="삭제" class="btn-edit"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link" th:href="@{|?loginId=${memberSearchCond.loginId}&page=${paging.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?loginId=${memberSearchCond.loginId}&page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?loginId=${memberSearchCond.loginId}&page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

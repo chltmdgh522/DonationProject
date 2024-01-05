@@ -45,7 +45,7 @@ public class AdminLoginController{
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER,adminLogin);
 
-        return "redirect:/admin";
+        return "redirect:/";
     }
 
     @PostMapping("/logout")

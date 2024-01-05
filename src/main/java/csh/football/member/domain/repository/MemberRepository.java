@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -15,7 +16,6 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Slf4j
@@ -155,6 +155,13 @@ public class MemberRepository {
         List<Member> member = template.query(sql, memberRowMapper());
         return member;
     }
+
+    public void delete(Optional<Member> member) {
+        String sql = "delete from member where login_id=:loginId";
+        SqlParameterSource param = new BeanPropertySqlParameterSource(member);
+        template.update(sql, param);
+    }
+
 
     RowMapper<Member> memberRowMapper() {
         return BeanPropertyRowMapper.newInstance(Member.class);

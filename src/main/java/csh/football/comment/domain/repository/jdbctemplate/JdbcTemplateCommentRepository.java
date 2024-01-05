@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class JdbcTemplateCommentRepository {
+public class JdbcTemplateCommentRepository implements CommentRepository{
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 

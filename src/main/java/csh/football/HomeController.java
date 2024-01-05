@@ -34,8 +34,7 @@ public class HomeController {
     public String homeLoginV3Spring(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                     Model model,
                                     @ModelAttribute("boardSearchCond") BoardSearchCond boardSearchCond,
-                                    @RequestParam(value = "page", defaultValue = "0") int page,
-                                    @RequestParam(value = "kw", defaultValue = "") String kw) {
+                                    @RequestParam(value = "page", defaultValue = "0") int page) {
 
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
@@ -57,7 +56,6 @@ public class HomeController {
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
         List<Member> pointMember = memberRepository.findTotalGivePoint();
 
-        log.info("page={}",paging);
 
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("paging", paging);
