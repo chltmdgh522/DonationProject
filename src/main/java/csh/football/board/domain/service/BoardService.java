@@ -2,10 +2,11 @@ package csh.football.board.domain.service;
 
 
 import csh.football.board.domain.board.Board;
+import csh.football.board.domain.board.BoardDto;
 import csh.football.board.domain.repository.BoardRepository;
-import csh.football.board.domain.repository.BoardSearchCond;
 import csh.football.board.domain.repository.jpa.JpaBoardRepository;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
+import csh.football.file.FileStore;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final JdbcTemplateCommentRepository commentRepository;
     private final JpaBoardRepository jpaBoardRepository;
+    private final FileStore fileStore;
 
     //마이페이지에서 해당유저 게시물 보여주기
     public List<Board> userCheckService(String memberId) {
@@ -64,16 +66,54 @@ public class BoardService {
         return max;
     }
 
-    public void boardSaveService(Member member, Board board) {
+    public void boardSaveService(Member member, BoardDto fboard) throws IOException {
+        Board board=new Board();
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         int boardId = addIdService(member.getId());
         board.setBoardId(String.valueOf(boardId));
+        board.setTitle(fboard.getTitle());
+        board.setContent(fboard.getContent());
+        board.setBoardType(fboard.isBoardType());
 
         //게시물 생성시간
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일  HH시 mm분");
         Date date = new Date();
         board.setDate(sdf.format(date));
+
+
+
+        //게시물 사진 저장
+        String uploadImage = fileStore.storeFile(fboard.getBoardImage());
+        board.setBoardImage(uploadImage);
+        boardRepository.save(board);
+
+        //게시물 생성할때 포인트 점수 100
+        memberRepository.updatePoint(member.getId(), member.getPoint() + 100);
+    }
+
+    public void boardUpdateService(Member member, BoardDto fboard) throws IOException {
+        Board board=new Board();
+        board.setMemberName(member.getName());
+        board.setMemberId(member.getId());
+        int boardId = addIdService(member.getId());
+        board.setBoardId(String.valueOf(boardId));
+        board.setTitle(fboard.getTitle());
+        board.setContent(fboard.getContent());
+        board.setBoardType(fboard.isBoardType());
+
+        //게시물 생성시간
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일  HH시 mm분");
+        Date date = new Date();
+        board.setDate(sdf.format(date));
+
+        log.info("abc={}",board.getDate());
+
+
+        //게시물 사진 저장
+        log.info("aa={}",fboard.getBoardImage());
+        String uploadImage = fileStore.storeFile(fboard.getBoardImage());
+        board.setBoardImage(uploadImage);
         boardRepository.save(board);
 
         //게시물 생성할때 포인트 점수 100

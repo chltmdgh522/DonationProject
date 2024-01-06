@@ -1,7 +1,5 @@
 package csh.football.file;
 
-import csh.football.member.domain.member.Member;
-import csh.football.member.domain.mypage.UploadFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

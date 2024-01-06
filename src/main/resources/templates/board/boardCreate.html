@@ -11,8 +11,9 @@
     <h2>님의 글쓰기</h2>
   </div>
 
+
   <!-- 글쓰기 폼 -->
-  <form th:action="@{/board/{id}(id=${board.memberId})}" th:object="${board}" method="post">
+  <form th:action="@{/board}" th:object="${board}" method="post"  enctype="multipart/form-data">
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
       <input type="text" class="form-control" id="title" name="title" th:field="*{title}" required>
@@ -26,6 +27,10 @@
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" th:field="*{boardType}">
       <label class="form-check-label">기부게시판</label>
+    </div>
+
+    <div>
+      <input name="boardImage" type="file" multiple="multiple" class="upload-button"  >
     </div>
 
     <button type="submit" class="btn btn-primary" th:onclick="|location.href='@{/board/{id}(id=${board.memberId})}'|">게시</button>

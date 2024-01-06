@@ -1,10 +1,12 @@
 package csh.football.board.web.board;
 
+import csh.football.board.domain.board.BoardDto;
 import csh.football.board.domain.service.BoardService;
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
+import csh.football.file.FileStore;
 import csh.football.give.domain.give.Give;
 import csh.football.give.domain.reposiotry.GiveRepository;
 import csh.football.member.domain.member.Member;
@@ -14,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,7 +26,7 @@ import java.util.Optional;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/board/{memberId}")
+@RequestMapping("/board")
 public class BoardController {
     int num = 0;
 
@@ -32,13 +36,14 @@ public class BoardController {
     private final BoardService boardService;
     private final GiveRepository giveRepository;
 
+    private final FileStore fileStore;
     //게시판 생성뷰
     @GetMapping
     public String boardCreate(
             @ModelAttribute Board board,
-            @PathVariable String memberId,
+            @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model) {
-        Member member = boardService.findByMemberId(memberId);
+        Member member = boardService.findByMemberId(loginMember.getId());
         if (member == null) {
             return "/error/4xx";
         }
@@ -51,10 +56,11 @@ public class BoardController {
     //게시판 생성 처리
     @PostMapping
     public String createBoard(
-            @ModelAttribute Board board,
-            @PathVariable String memberId
-    ) {
-        Member member = boardService.findByMemberId(memberId);
+            @ModelAttribute("board") BoardDto board,
+            @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember
+            ) throws IOException {
+        log.info("type={}",board.isBoardType());
+        Member member = boardService.findByMemberId(loginMember.getId());
         if (member == null) {
             return "/error/4xx";
         }
@@ -63,7 +69,7 @@ public class BoardController {
     }
 
     //유저 게시판 보기
-    @GetMapping("/{boardId}")
+    @GetMapping("/{memberId}/{boardId}")
     public String checkBoard(@PathVariable String memberId,
                              @PathVariable String boardId,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
@@ -76,7 +82,7 @@ public class BoardController {
         if (board == null) {
             return "error/4xx";
         }
-        if (board.getUpdate() == 'M') {
+        if (board.getModify().equals("M")) {
             model.addAttribute("update", "(수정됨)");
         }
 
@@ -97,7 +103,7 @@ public class BoardController {
     }
 
     //게시판 삭제
-    @DeleteMapping("/{boardId}")
+    @DeleteMapping("/{memberId}/{boardId}")
     public String editDeleteBoard(@PathVariable String memberId,
                                   @PathVariable String boardId) {
 
@@ -111,12 +117,12 @@ public class BoardController {
 
     //게시판 편집뷰
     @GetMapping("/{boardId}/edit")
-    public String editBoard(@PathVariable String memberId,
+    public String editBoard(
                             @PathVariable String boardId,
                             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                             Model model) {
-        Board board = boardService.boardCheckService(memberId, boardId);
-        if (board == null || !Objects.equals(memberId, loginMember.getId())) {
+        Board board = boardService.boardCheckService(loginMember.getId(), boardId);
+        if (board == null || !Objects.equals(board.getMemberId(), loginMember.getId())) {
             return "error/4xx";
         }
         model.addAttribute("board", board);
@@ -125,20 +131,26 @@ public class BoardController {
 
     //게시판 편집 처리
     @PostMapping("/{boardId}/edit")
-    public String editPostBoard(@PathVariable String memberId,
-                                @PathVariable String boardId,
-                                @ModelAttribute Board fboard) {
-        Board board = boardService.boardCheckService(memberId, boardId);
+    public String editPostBoard(@PathVariable String boardId,
+                                @ModelAttribute BoardDto fboard,
+                                RedirectAttributes redirectAttributes,
+                                @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) throws IOException {
+        Board board = boardService.boardCheckService(loginMember.getId(), boardId);
         if (board == null) {
             return "error/4xx";
         }
         board.setTitle(fboard.getTitle());
         board.setContent(fboard.getContent());
-        if (board.getUpdate() == 'X') {
-            board.setUpdate('M');
+
+        String uploadImage = fileStore.storeFile(fboard.getBoardImage());
+        board.setBoardImage(uploadImage);
+
+        if (board.getModify().equals("X")) {
+            board.setModify("M");
         }
         boardRepository.updateTitleAndContent(board);
 
+        redirectAttributes.addAttribute("memberId",loginMember.getId());
 
         return "redirect:/board/{memberId}/{boardId}";
     }

@@ -29,11 +29,13 @@ public class Board {
 
     String date;
 
-    char update;
+    String modify;
 
     boolean boardType;
 
     int givePoint;
+
+    String boardImage;
 
     public Board() {
 

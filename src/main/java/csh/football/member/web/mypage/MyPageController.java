@@ -101,16 +101,4 @@ public class MyPageController {
     }
 
 
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource profileImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
-
-    @ResponseBody
-    @GetMapping("/imagesV2/{memberId}")
-    public Resource profileImageV2(@PathVariable String memberId) throws MalformedURLException{
-        Optional<Member> member = memberRepository.findByMemberId(memberId);
-        return new UrlResource("file:" + fileStore.getFullPath(member.get().getProfile()));
-    }
 }
