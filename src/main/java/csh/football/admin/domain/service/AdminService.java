@@ -1,6 +1,8 @@
 package csh.football.admin.domain.service;
 
+import csh.football.admin.domain.comment.JpaComment;
 import csh.football.admin.domain.member.JpaMember;
+import csh.football.admin.domain.repository.JpaCommentRepository;
 import csh.football.board.domain.repository.BoardRepository;
 import csh.football.comment.domain.repository.jdbctemplate.CommentRepository;
 import csh.football.member.domain.member.Member;
@@ -27,9 +29,8 @@ public class AdminService {
 
     private final JpaMemberRepository jpaMemberRepository;
 
-    private final BoardRepository boardRepository;
 
-    private final CommentRepository commentRepository;
+    private final JpaCommentRepository jpaCommentRepository;
 
     public Member adminLogin(String loginId, String password) {
 
@@ -55,10 +56,15 @@ public class AdminService {
         return jpaMemberRepository.findByLoginIdContaining(loginId, pageable);
     }
 
-//    //멤버 회원 삭제
-//    public void serviceMemberDelete(Optional<Member> member){
-//
-//        boardRepository.
-//    }
+    public Page<JpaComment> getListComment(String name,String comment, int page) {
+
+        Pageable pageable = PageRequest.of(page, 10);
+
+        if (comment.equals("")) {
+            return jpaCommentRepository.findAll(pageable);
+        }
+
+        return jpaCommentRepository.findByMemberNameContainingAndContentContaining(name,comment, pageable);
+    }
 
 }

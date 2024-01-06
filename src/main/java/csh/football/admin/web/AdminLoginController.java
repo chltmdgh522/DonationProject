@@ -12,47 +12,48 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
 @Slf4j
 @RequiredArgsConstructor
-public class AdminLoginController{
+public class AdminLoginController {
     private final AdminService adminService;
 
     @GetMapping("/login")
-    public String adminLogin(@ModelAttribute("member") LoginForm member){
+    public String adminLogin(@ModelAttribute("member") LoginForm member, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+
+        if (loginMember != null) {
+            return "redirect:/";
+        }
         return "admin/adminLogin";
     }
 
     @PostMapping("/login")
     public String adminLoginProcess(@Validated @ModelAttribute("member") LoginForm member,
                                     BindingResult bindingResult,
-                                    HttpServletRequest request){
+                                    HttpServletRequest request) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "admin/adminLogin";
         }
         Member adminLogin = adminService.adminLogin(member.getLoginId(), member.getPassword());
-        if(adminLogin==null){
-            bindingResult.reject("loginFail","아이디 또는 비밀번호가 맞지 않습니다.");
+        if (adminLogin == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "admin/adminLogin";
         }
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER,adminLogin);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, adminLogin);
 
         return "redirect:/";
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
-        if(session != null){
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/";

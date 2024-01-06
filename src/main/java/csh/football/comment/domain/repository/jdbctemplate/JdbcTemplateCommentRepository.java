@@ -52,7 +52,7 @@ public class JdbcTemplateCommentRepository implements CommentRepository{
     }
 
 
-    public void delete(String commentId){
+    public void delete(Long commentId){
         String sql = "delete from comment where id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", commentId);

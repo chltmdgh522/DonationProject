@@ -3,10 +3,8 @@ package csh.football.admin.web;
 import csh.football.admin.domain.member.JpaMember;
 import csh.football.admin.domain.member.MemberSearch;
 import csh.football.admin.domain.service.AdminService;
-import csh.football.board.domain.board.Board;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
-import csh.football.member.domain.service.MemberService;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminMemberController {
     private final AdminService adminService;
 
     private final MemberRepository memberRepository;
@@ -46,19 +44,42 @@ public class AdminController {
         }
         Page<JpaMember> list = adminService.getList(cond.getLoginId(), page);
 
-
         model.addAttribute("paging",list);
         return "admin/adminMember";
     }
 
+    @PostMapping("/{loginId}/point")
+    public String point(@ModelAttribute JpaMember member,
+                        @PathVariable String loginId,
+                        Model model){
+        log.info("member={}",member.getPoint());
+        Optional<Member> fmember = memberRepository.findByLoginId(loginId);
+        model.addAttribute("member", member);
+        memberRepository.updatePoint(fmember.get().getId(), member.getPoint());
+        return "redirect:/admin/member";
+    }
+
+    @PostMapping("/{loginId}/givePoint")
+    public String givPoint(@ModelAttribute JpaMember member,
+                        @PathVariable String loginId,
+                        Model model){
+        Optional<Member> fmember = memberRepository.findByLoginId(loginId);
+        model.addAttribute("member", member);
+        memberRepository.updateTotalGivePoint(fmember.get().getId(), member.getTotalGivePoint());
+        return "redirect:/admin/member";
+    }
+
+
+
     @DeleteMapping("/{loginId}")
-    public String editDeleteBoard(@PathVariable String loginId) {
+    public String editDeleteMember(@PathVariable String loginId) {
+
         Optional<Member> member = memberRepository.findByLoginId(loginId);
         if (member.isEmpty()) {
             return "error/5xx";
         }
         memberRepository.delete(member);
-        return "redirect:/";
+        return "redirect:/admin/member";
     }
 
 }

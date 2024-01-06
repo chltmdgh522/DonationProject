@@ -34,7 +34,7 @@ public class MemberService {
             return "email";
         }
 
-
+        member.setProfile("basic.jpg");
         member.setId(UUID.randomUUID().toString());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setPoint(1000);

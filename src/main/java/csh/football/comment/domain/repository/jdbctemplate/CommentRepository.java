@@ -10,5 +10,5 @@ public interface CommentRepository {
     List<Comment> findByBoardId(Long boardId);
     void deleteBoard(String boardId);
 
-    void delete(String commentId);
+    void delete(Long commentId);
 }

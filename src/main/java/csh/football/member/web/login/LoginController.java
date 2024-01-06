@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -30,7 +27,13 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm) {
+    public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
+                            @SessionAttribute(name=SessionConst.LOGIN_MEMBER , required = false) Member loginMember) {
+
+        if(loginMember !=null){
+            return "redirect:/";
+        }
+
         return "login/loginForm";
     }
 

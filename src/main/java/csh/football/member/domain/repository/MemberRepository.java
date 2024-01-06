@@ -33,14 +33,14 @@ public class MemberRepository {
 
     public Member save(Member member) {
 
-        if(member.getLoginId().equals("chltmdgh522")){
+        if (member.getLoginId().equals("chltmdgh522")) {
             member.setRole("O");
-        }else{
+        } else {
             member.setRole("X");
         }
 
-        String sql = "insert into member(id,login_id, password,name,gender,description,email,point,role) " +
-                "values(:id,:loginId,:password,:name,:gender,:description,:email,:point,:role)";
+        String sql = "insert into member(id,login_id, password,name,gender,description,email,point,role,profile) " +
+                "values(:id,:loginId,:password,:name,:gender,:description,:email,:point,:role,:profile)";
 
 
         SqlParameterSource param = new MapSqlParameterSource()
@@ -52,7 +52,8 @@ public class MemberRepository {
                 .addValue("description", member.getDescription())
                 .addValue("email", member.getEmail())
                 .addValue("point", member.getPoint())
-                .addValue("role", member.getRole());
+                .addValue("role", member.getRole())
+                .addValue("profile", member.getProfile());
         template.update(sql, param);
         return member;
     }

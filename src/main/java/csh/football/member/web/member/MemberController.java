@@ -4,15 +4,13 @@ import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.domain.member.MemberType;
 import csh.football.member.domain.service.MemberService;
+import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -24,13 +22,20 @@ import java.util.Objects;
 public class MemberController {
 
     private final MemberService memberService;
+
     @ModelAttribute("memberType")
-    public MemberType[] memberType(){
+    public MemberType[] memberType() {
         MemberType[] values = MemberType.values();
         return values;
     }
+
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("member") Member member) {
+    public String addForm(@ModelAttribute("member") Member member,
+                          @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+
+        if (loginMember != null) {
+            return "redirect:/";
+        }
         return "members/addMemberForm";
     }
 

@@ -15,20 +15,17 @@ public class JpaMember {
     @Id
     private String id;
 
-    @NotEmpty
-    @Email(message = "이메일 형식이 아닙니다.")
     private String email;
 
-    @NotEmpty
-    @Size(max = 16, message = "15자 이하여야 됩니다.")
     private String loginId; //로그인 ID
-    @NotEmpty
+
     private String name; //사용자 이름
 
     private int point;
 
     private int totalGivePoint;
 
+    private String date;
 
 
     public JpaMember(){
