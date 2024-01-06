@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-//@Repository
+@Repository
 public class JdbcTemplateBoardRepository implements BoardRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -67,7 +68,22 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
 
     @Override
     public void updateViewCount(Long id, int viewCount) {
+        String sql = "update board set view_count=:viewCount where id=:id";
 
+        SqlParameterSource param=new MapSqlParameterSource()
+                .addValue("viewCount",viewCount)
+                .addValue("id",id);
+        jdbcTemplate.update(sql,param);
+    }
+
+    @Override
+    public void updateBoardPoint(Long id, int givePoint) {
+        String sql = "update board set give_point=:givePoint where id=:id";
+
+        SqlParameterSource param=new MapSqlParameterSource()
+                .addValue("givePoint",givePoint)
+                .addValue("id",id);
+        jdbcTemplate.update(sql,param);
     }
 
     @Override
@@ -85,7 +101,14 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
 
     @Override
     public Optional<Board> findById(Long id) {
-        return Optional.empty();
+        String sql = "select * from board where id=:id";
+        try {
+            Map<String, Long> param = Map.of("id", id);
+            Board board = jdbcTemplate.queryForObject(sql, param, boardRowMapper());
+            return Optional.of(board);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -96,6 +119,7 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
 
     @Override
     public List<Board> findSearchAll(BoardSearchCond boardSearchCond) {
+
         return null;
     }
 

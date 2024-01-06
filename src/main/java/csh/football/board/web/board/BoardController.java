@@ -5,6 +5,8 @@ import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
 import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
+import csh.football.give.domain.give.Give;
+import csh.football.give.domain.reposiotry.GiveRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class BoardController {
 
     private final JdbcTemplateCommentRepository commentRepository;
     private final BoardService boardService;
+    private final GiveRepository giveRepository;
 
     //게시판 생성뷰
     @GetMapping
@@ -82,10 +85,14 @@ public class BoardController {
 
         List<Comment> fcomment = commentRepository.findByBoardId(fboard.get().getId());
 
+
+        List<Give> giveComment = giveRepository.findByBoardId(fboard.get().getId());
+
         model.addAttribute("memberId", memberId);
         model.addAttribute("fcomment", fcomment);
         model.addAttribute("member", loginMember);
         model.addAttribute("board", board);
+        model.addAttribute("give",giveComment);
         return "board/board";
     }
 

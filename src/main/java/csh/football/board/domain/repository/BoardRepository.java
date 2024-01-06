@@ -16,6 +16,7 @@ public interface BoardRepository {
 
     void updateViewCount(Long id, int viewCount);
 
+    void updateBoardPoint(Long id, int givePoint);
 
     Optional<Board> findByMemberIdAndBoardId(String memberId, String boardId);
 

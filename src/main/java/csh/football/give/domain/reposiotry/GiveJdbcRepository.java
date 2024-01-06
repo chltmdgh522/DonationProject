@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -44,11 +45,10 @@ public class GiveJdbcRepository implements GiveRepository{
     }
 
     @Override
-    public Optional<Give> findByBoardId(String boardId) {
-        String sql = "select * from give where member_id=:boardId";
-        Map<String,String> param= Map.of("boardId",boardId);
-        Give give = jdbcTemplate.queryForObject(sql, param, giveRowMapper());
-        return Optional.ofNullable(give);
+    public List<Give> findByBoardId(Long boardId) {
+        String sql = "select * from give where board_id=:boardId";
+        Map<String,Long> param= Map.of("boardId",boardId);
+        return jdbcTemplate.query(sql, param, giveRowMapper());
     }
 
     RowMapper<Give> giveRowMapper(){

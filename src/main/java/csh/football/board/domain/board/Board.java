@@ -33,6 +33,8 @@ public class Board {
 
     boolean boardType;
 
+    int givePoint;
+
     public Board() {
 
     }

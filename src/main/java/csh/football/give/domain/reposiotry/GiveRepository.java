@@ -2,6 +2,7 @@ package csh.football.give.domain.reposiotry;
 
 import csh.football.give.domain.give.Give;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GiveRepository {
@@ -10,7 +11,7 @@ public interface GiveRepository {
 
     public Optional<Give> findByMemberId(String memberId);
 
-    public Optional<Give> findByBoardId(String BoardId);
+    public List<Give> findByBoardId(Long BoardId);
 
 
 }

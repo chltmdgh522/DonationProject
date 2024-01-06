@@ -65,5 +65,75 @@ public class HomeController {
         return "loginHome";
     }
 
+    @GetMapping("/donation")
+    public String homeDonation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                                    Model model,
+                                    @ModelAttribute("boardSearchCond") BoardSearchCond boardSearchCond,
+                                    @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        //사이트 방문자수
+        Optional<Visitant> visit = visitService.addService();
+
+        //세션에 회원 데이터가 없으면 home
+        if (loginMember == null) {
+            model.addAttribute("visit", visit);
+            return "home";
+        }
+
+        String memberName = boardSearchCond.getMemberName();
+        String title = boardSearchCond.getTitle();
+
+        Page<Board> paging = boardService.getList(memberName, title, page);
+
+
+        memberRepository.findByLoginId(loginMember.getLoginId())
+                .ifPresent(member -> model.addAttribute("member", member));
+        List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
+        List<Member> pointMember = memberRepository.findTotalGivePoint();
+
+
+        //세션이 유지되면 로그인으로 이동
+        model.addAttribute("paging", paging);
+        model.addAttribute("board", boards);
+        model.addAttribute("visit", visit);
+        model.addAttribute("pointMember", pointMember);
+        return "donationHome";
+    }
+
+    @GetMapping("/free")
+    public String homeFree(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                               Model model,
+                               @ModelAttribute("boardSearchCond") BoardSearchCond boardSearchCond,
+                               @RequestParam(value = "page", defaultValue = "0") int page) {
+
+        //사이트 방문자수
+        Optional<Visitant> visit = visitService.addService();
+
+        //세션에 회원 데이터가 없으면 home
+        if (loginMember == null) {
+            model.addAttribute("visit", visit);
+            return "home";
+        }
+
+        String memberName = boardSearchCond.getMemberName();
+        String title = boardSearchCond.getTitle();
+
+        Page<Board> paging = boardService.getList(memberName, title, page);
+
+
+        memberRepository.findByLoginId(loginMember.getLoginId())
+                .ifPresent(member -> model.addAttribute("member", member));
+        List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
+        List<Member> pointMember = memberRepository.findTotalGivePoint();
+
+
+        //세션이 유지되면 로그인으로 이동
+        model.addAttribute("paging", paging);
+        model.addAttribute("board", boards);
+        model.addAttribute("visit", visit);
+        model.addAttribute("pointMember", pointMember);
+        return "freeHome";
+    }
+
 
 }

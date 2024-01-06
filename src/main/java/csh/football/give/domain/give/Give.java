@@ -20,4 +20,6 @@ public class Give {
 
     @NotEmpty
     String giveText;
+
+    String date;
 }

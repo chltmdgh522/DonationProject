@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+//@Repository
 @Slf4j
 @RequiredArgsConstructor
 public class MyBatisBoardRepository implements BoardRepository {
@@ -37,6 +37,11 @@ public class MyBatisBoardRepository implements BoardRepository {
     public void updateViewCount(Long id,int viewCount) {
         boardMapper.updateViewCount(id,viewCount
         );
+    }
+
+    @Override
+    public void updateBoardPoint(Long id, int givePoint) {
+
     }
 
 

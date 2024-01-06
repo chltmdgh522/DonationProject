@@ -64,6 +64,10 @@ public class GiveController {
         String memberId = board.get().getMemberId();
         redirectAttributes.addAttribute("memberId",memberId);
 
+        //기존 게시판 포인트 증가
+        int resultPoint=board.get().getGivePoint()+give.getGivePoint();
+        boardRepository.updateBoardPoint(boardId,resultPoint);
+
         String fboardId = board.get().getBoardId();
         redirectAttributes.addAttribute("fboardId",fboardId);
 

@@ -53,7 +53,7 @@
     <div class="btn-group mb-3" role="group" aria-label="Board Selection">
         <!-- 전체 게시판 -->
         <button type="button" class="btn btn-outline-secondary"
-                th:onclick="|location.href='@{/donation}'|">후원 게시판
+                th:onclick="|location.href='@{/}'|">전체 게시판
         </button>
 
         <!-- 기부 게시판 -->
@@ -86,7 +86,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="boards,loop : ${paging}">
+        <tr th:each="boards,loop : ${paging}" th:if="${boards.boardType}">
             <td th:text="${(paging.number * paging.size) + loop.index +1}"></td>
             <td><a th:text="${boards.memberName}" th:href="@{/my-page/{id}(id=${boards.memberId})}">회원 이름</a></td>
             <td><a th:text="${boards.title}"
