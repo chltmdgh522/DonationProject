@@ -66,7 +66,7 @@ public class BoardService {
         return max;
     }
 
-    public void boardSaveService(Member member, BoardDto fboard) throws IOException {
+    public Board boardSaveService(Member member, BoardDto fboard) throws IOException {
         Board board=new Board();
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
@@ -75,6 +75,11 @@ public class BoardService {
         board.setTitle(fboard.getTitle());
         board.setContent(fboard.getContent());
         board.setBoardType(fboard.isBoardType());
+
+        if(board.isBoardType()){
+            board.setOptionPoint(fboard.getOptionPoint());
+        }
+
 
         //게시물 생성시간
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일  HH시 mm분");
@@ -90,6 +95,7 @@ public class BoardService {
 
         //게시물 생성할때 포인트 점수 100
         memberRepository.updatePoint(member.getId(), member.getPoint() + 100);
+        return board;
     }
 
     public void boardUpdateService(Member member, BoardDto fboard) throws IOException {

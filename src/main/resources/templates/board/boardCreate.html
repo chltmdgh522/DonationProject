@@ -16,7 +16,7 @@
   <form th:action="@{/board}" th:object="${board}" method="post"  enctype="multipart/form-data">
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
-      <input type="text" class="form-control" id="title" name="title" th:field="*{title}" required>
+      <input type="text" class="form-control" id="title" name="title" th:field="*{title}"  maxlength="13" required>
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용</label>
@@ -25,17 +25,51 @@
 
     <!-- 기부 체크박스 -->
     <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" th:field="*{boardType}">
+      <input type="checkbox" class="form-check-input" th:field="*{boardType}" onchange="toggleDonationBar()">
       <label class="form-check-label">기부게시판</label>
+    </div>
+    <div id="donationBar" style="display: none;">
+    <label for="optionPoint">기부액 선택 (드래그 앤 드롭):</label>
+    <input
+            type="range"
+            id="optionPoint"
+            name="optionPoint"
+            th:field="*{optionPoint}"
+            min="1"
+            max="1001008"
+            step="10000"
+            value="1"
+            oninput="updateDonationValue()"
+    />
+    <span id="donationValue">1</span> 원
     </div>
 
     <div>
       <input name="boardImage" type="file" multiple="multiple" class="upload-button"  >
     </div>
 
-    <button type="submit" class="btn btn-primary" th:onclick="|location.href='@{/board/{id}(id=${board.memberId})}'|">게시</button>
+    <button type="submit" class="btn btn-primary">게시</button>
   </form>
 
 </div> <!-- /container -->
+
+<script th:inline="javascript">
+  function updateDonationValue() {
+    var donationRange = document.getElementById('optionPoint');
+    var donationValue = document.getElementById('donationValue');
+    donationValue.innerHTML = donationRange.value;
+  }
+
+  function toggleDonationBar() {
+    var donationCheckbox = document.getElementById('boardType1');
+    var donationBar = document.getElementById('donationBar');
+
+    if (donationCheckbox.checked) {
+      donationBar.style.display = 'block';
+    } else {
+      donationBar.style.display = 'none';
+    }
+  }
+</script>
 </body>
 </html>

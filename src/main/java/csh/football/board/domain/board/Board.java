@@ -37,6 +37,8 @@ public class Board {
 
     String boardImage;
 
+    int optionPoint;
+
     public Board() {
 
     }

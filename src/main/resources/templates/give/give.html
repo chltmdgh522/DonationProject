@@ -60,7 +60,7 @@
             th:field="*{givePoint}"
             min="1"
             th:max="${member.get().point}"
-            step="1"
+            step="10000"
             th:value="${member.get().point}"
             oninput="updateDonationValue()"
     />

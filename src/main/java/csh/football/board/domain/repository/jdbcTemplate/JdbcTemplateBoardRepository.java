@@ -34,8 +34,8 @@ public class JdbcTemplateBoardRepository implements BoardRepository {
     @Override
     public void save(Board board) {
 
-        String sql = "insert into board(board_id,title,content, member_id,member_name,board_image,date,board_type) " +
-                "values(:boardId,:title,:content,:memberId,:memberName,:boardImage,:date,:boardType)";
+        String sql = "insert into board(board_id,title,content, member_id,member_name,board_image,date,board_type,option_point) " +
+                "values(:boardId,:title,:content,:memberId,:memberName,:boardImage,:date,:boardType,:optionPoint)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(board);
         KeyHolder key = new GeneratedKeyHolder();
         jdbcTemplate.update(sql, param, key);

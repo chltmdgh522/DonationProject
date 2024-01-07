@@ -61,6 +61,9 @@ public class MemberService {
         if (emember.isEmpty()) {
             return "email";
         }
+        if (!emember.get().getEmail().equals(fmember.get().getEmail())) {
+            return "email";
+        }
         return null;
     }
 }

@@ -17,7 +17,7 @@
           th:object="${board}" method="post">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" id="title" name="title" th:field="*{title}" required>
+            <input type="text" class="form-control" id="title" name="title" maxlength="13"  th:field="*{title}" required>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>

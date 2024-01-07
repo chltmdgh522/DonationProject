@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,6 +52,7 @@ public class BoardController {
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         model.addAttribute("board", board);
+        model.addAttribute("member",loginMember);
         return "board/boardCreate";
     }
 
@@ -57,15 +60,19 @@ public class BoardController {
     @PostMapping
     public String createBoard(
             @ModelAttribute("board") BoardDto board,
+            RedirectAttributes redirectAttributes,
             @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember
             ) throws IOException {
-        log.info("type={}",board.isBoardType());
         Member member = boardService.findByMemberId(loginMember.getId());
         if (member == null) {
             return "/error/4xx";
         }
-        boardService.boardSaveService(member, board);
-        return "redirect:/";
+        Board board1 = boardService.boardSaveService(member, board);
+
+        redirectAttributes.addAttribute("memberId",loginMember.getId());
+        redirectAttributes.addAttribute("boardId",board1.getBoardId());
+
+        return "redirect:/board/{memberId}/{boardId}";
     }
 
     //유저 게시판 보기
@@ -85,6 +92,9 @@ public class BoardController {
         if (board.getModify().equals("M")) {
             model.addAttribute("update", "(수정됨)");
         }
+        int process = (int) ((float) board.getGivePoint() / board.getOptionPoint() * 100);
+
+        log.info("d={}",process);
 
 
         Optional<Board> fboard = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
@@ -94,6 +104,7 @@ public class BoardController {
 
         List<Give> giveComment = giveRepository.findByBoardId(fboard.get().getId());
 
+        model.addAttribute("process", process);
         model.addAttribute("memberId", memberId);
         model.addAttribute("fcomment", fcomment);
         model.addAttribute("member", loginMember);

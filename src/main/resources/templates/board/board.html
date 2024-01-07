@@ -104,12 +104,19 @@
 
 
 <div class="card" th:object="${board}" th:if="${board.boardType}">
-    <div class="card-body">
-        <p class="card-title" th:text="|${board.givePoint}점|">게시물 내용</p>
+    <div class="card-body" th:if="${board.givePoint} le ${board.optionPoint}">
+        <p class="card-title"
+           th:text="|${board.givePoint}점 / ${board.optionPoint}점 진행률: ${process}%|">기부 목표 받은 점수</p>
+    </div>
+
+    <div class="card-body" th:if="${board.givePoint} ge ${board.optionPoint}">
+        <p class="card-title"
+           th:text="|${board.optionPoint}점 목표금액을 달성했습니다!|">기부 목표 받은 점수</p>
     </div>
 </div>
 
-<form th:action="@{/give/{id}(id=${board.id})}" method="get">
+
+<form th:action="@{/give/{id}(id=${board.id})}" method="get" th:if="${board.givePoint} le ${board.optionPoint}">
     <input type="submit" value="후원하기" class="btn-edit"  th:if="${board.boardType}" />
 </form>
 

@@ -4,6 +4,7 @@ import csh.football.member.domain.member.Member;
 import csh.football.member.domain.password.ChangePassword;
 import csh.football.member.domain.password.ForgotPassword;
 import csh.football.member.domain.password.NewPassword;
+import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.domain.service.MemberService;
 import csh.football.member.web.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +29,8 @@ public class PasswordController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final MemberService memberService;
+
+    private final MemberRepository memberRepository; //원래 이렇게 하면 안됨,,,,
 
     @GetMapping("/change-password")
     public String changePassword(@ModelAttribute("password") ChangePassword password,
@@ -71,13 +76,19 @@ public class PasswordController {
     }
 
     @GetMapping("/forgot-password")
-    public String getForgotPassword(@ModelAttribute("forgotPassword") ForgotPassword forgotPassword) {
+    public String getForgotPassword(@ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
+                                    @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+
+        if (loginMember != null) {
+            return "redirect:/";
+        }
         return "password/forgot-password";
     }
 
     @PostMapping("/forgot-password")
     public String postForgotPassword(@Validated @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
-                                     BindingResult bindingResult) {
+                                     BindingResult bindingResult,
+                                     HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "password/forgot-password";
         }
@@ -92,13 +103,39 @@ public class PasswordController {
         }
 
 
-        return "redirect:/new-password";
+        HttpSession session = request.getSession(); //디폴트가 true
+        //세션에 로그인 회원 정보 보관
+        session.setAttribute(SessionConst.TEM_MEMBER, forgotPassword.getLoginId());
+
+
+        return "redirect:/tem";
     }
 
-    @GetMapping("/temporary-password")
-    public String getNewPassword(@ModelAttribute("newPassword") NewPassword newPassword) {
 
-        return "/password/new-password";
+    @GetMapping("/tem")
+    public String getTem(@ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
+                         @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                         @SessionAttribute(name = SessionConst.TEM_MEMBER, required = false) String loginMember2,
+                         Model model,
+                         HttpServletRequest request) {
+        log.info("d");
+        if (loginMember != null || loginMember2 ==null) {
+            return "redirect:/";
+        }
+
+        Random random=new Random();
+        int randomNumber = 1000 + random.nextInt(9000);
+
+        Optional<Member> member = memberRepository.findByLoginId(loginMember2);
+        memberService.updatePassword(member.get().getId(), String.valueOf(randomNumber));
+        model.addAttribute("password",randomNumber);
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "password/tem";
     }
-
 }
