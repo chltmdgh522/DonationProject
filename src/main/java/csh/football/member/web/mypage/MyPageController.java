@@ -80,14 +80,16 @@ public class MyPageController {
             @ModelAttribute("member") MyPageMember mpMember,
             BindingResult bindingResult,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) throws IOException {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "/mypage/my-page-edit";
         }
-
+        Member member = new Member();
         String uploadImage = fileStore.storeFile(mpMember.getProfileImage());
-
-        Member member=new Member();
         member.setProfile(uploadImage);
+        if (uploadImage ==null) {
+            Optional<Member> fmember = memberRepository.findByLoginId(loginMember.getLoginId());
+            member.setProfile(fmember.get().getProfile());
+        }
         member.setName(mpMember.getName());
         member.setDescription(mpMember.getDescription());
 

@@ -150,11 +150,17 @@ public class BoardController {
         if (board == null) {
             return "error/4xx";
         }
+
         board.setTitle(fboard.getTitle());
         board.setContent(fboard.getContent());
 
         String uploadImage = fileStore.storeFile(fboard.getBoardImage());
         board.setBoardImage(uploadImage);
+
+        if (uploadImage ==null) {
+            Optional<Board> ffboard = boardRepository.findById(board.getId());
+            board.setBoardImage(ffboard.get().getBoardImage());
+        }
 
         if (board.getModify().equals("X")) {
             board.setModify("M");
