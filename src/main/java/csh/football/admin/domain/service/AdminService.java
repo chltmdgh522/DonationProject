@@ -35,11 +35,13 @@ public class AdminService {
     public Member adminLogin(String loginId, String password) {
 
         Optional<Member> member = memberRepository.findByLoginId(loginId);
-        if (member.get().getRole().equals("O")) {
+        if (member.isPresent()) {
+            if (member.get().getRole().equals("O")) {
 
-            return memberRepository.findByLoginId(loginId)
-                    .filter(a -> bCryptPasswordEncoder.matches(password, a.getPassword()))
-                    .orElse(null);
+                return memberRepository.findByLoginId(loginId)
+                        .filter(a -> bCryptPasswordEncoder.matches(password, a.getPassword()))
+                        .orElse(null);
+            }
         }
         return null;
     }
@@ -49,14 +51,14 @@ public class AdminService {
 
         Pageable pageable = PageRequest.of(page, 10);
 
-        if(loginId.equals("")){
+        if (loginId.equals("")) {
             return jpaMemberRepository.findAll(pageable);
         }
 
         return jpaMemberRepository.findByLoginIdContaining(loginId, pageable);
     }
 
-    public Page<JpaComment> getListComment(String name,String comment, int page) {
+    public Page<JpaComment> getListComment(String name, String comment, int page) {
 
         Pageable pageable = PageRequest.of(page, 10);
 
@@ -64,7 +66,7 @@ public class AdminService {
             return jpaCommentRepository.findAll(pageable);
         }
 
-        return jpaCommentRepository.findByMemberNameContainingAndContentContaining(name,comment, pageable);
+        return jpaCommentRepository.findByMemberNameContainingAndContentContaining(name, comment, pageable);
     }
 
 }

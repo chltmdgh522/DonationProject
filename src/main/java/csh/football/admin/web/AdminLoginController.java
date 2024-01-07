@@ -40,6 +40,7 @@ public class AdminLoginController {
         }
         Member adminLogin = adminService.adminLogin(member.getLoginId(), member.getPassword());
         if (adminLogin == null) {
+            log.info("zzz");
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "admin/adminLogin";
         }
