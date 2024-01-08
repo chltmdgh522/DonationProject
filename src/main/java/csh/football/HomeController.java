@@ -39,25 +39,18 @@ public class HomeController {
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
 
-        //세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-            model.addAttribute("visit", visit);
-            return "home";
-        }
 
         String memberName = boardSearchCond.getMemberName();
         String title = boardSearchCond.getTitle();
 
         Page<Board> paging = boardService.getList(memberName, title, page);
 
-
-        memberRepository.findByLoginId(loginMember.getLoginId())
-                .ifPresent(member -> model.addAttribute("member", member));
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
         List<Member> pointMember = memberRepository.findTotalGivePoint();
 
 
         //세션이 유지되면 로그인으로 이동
+        model.addAttribute("loginMember",loginMember);
         model.addAttribute("paging", paging);
         model.addAttribute("board", boards);
         model.addAttribute("visit", visit);
@@ -75,10 +68,6 @@ public class HomeController {
         Optional<Visitant> visit = visitService.addService();
 
         //세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-            model.addAttribute("visit", visit);
-            return "home";
-        }
 
         String memberName = boardSearchCond.getMemberName();
         String title = boardSearchCond.getTitle();
@@ -86,10 +75,10 @@ public class HomeController {
         Page<Board> paging = boardService.getList(memberName, title, page);
 
 
-        memberRepository.findByLoginId(loginMember.getLoginId())
-                .ifPresent(member -> model.addAttribute("member", member));
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
         List<Member> pointMember = memberRepository.findTotalGivePoint();
+
+        model.addAttribute("loginMember",loginMember);
 
 
         //세션이 유지되면 로그인으로 이동
@@ -109,24 +98,16 @@ public class HomeController {
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
 
-        //세션에 회원 데이터가 없으면 home
-        if (loginMember == null) {
-            model.addAttribute("visit", visit);
-            return "home";
-        }
-
         String memberName = boardSearchCond.getMemberName();
         String title = boardSearchCond.getTitle();
 
         Page<Board> paging = boardService.getList(memberName, title, page);
 
 
-        memberRepository.findByLoginId(loginMember.getLoginId())
-                .ifPresent(member -> model.addAttribute("member", member));
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
         List<Member> pointMember = memberRepository.findTotalGivePoint();
 
-
+        model.addAttribute("loginMember",loginMember);
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("paging", paging);
         model.addAttribute("board", boards);

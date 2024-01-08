@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +29,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
-                            @SessionAttribute(name=SessionConst.LOGIN_MEMBER , required = false) Member loginMember) {
+                            @SessionAttribute(name=SessionConst.LOGIN_MEMBER , required = false) Member loginMember,
+                            Model model) {
 
         if(loginMember !=null){
             return "redirect:/";
         }
-
+        model.addAttribute("loginMember",loginMember);
         return "login/loginForm";
     }
 
