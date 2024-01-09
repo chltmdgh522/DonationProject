@@ -8,6 +8,7 @@ import csh.football.member.web.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +32,13 @@ public class MemberController {
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("member") Member member,
-                          @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+                          @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                          Model model) {
 
         if (loginMember != null) {
             return "redirect:/";
         }
+        model.addAttribute("loginMember",loginMember);
         return "members/addMemberForm";
     }
 
@@ -58,7 +61,7 @@ public class MemberController {
             bindingResult.reject("addFail", "존재하는 이메일이 있습니다.");
             return "members/addMemberForm";
         }
-        return "redirect:/";
+        return "redirect:/login";
     }
 
 }

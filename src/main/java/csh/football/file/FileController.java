@@ -43,6 +43,8 @@ public class FileController {
         return new UrlResource("file:" + fileStore.getFullPath(member.get().getProfile()));
     }
 
+
+    //게시글 사진
     @ResponseBody
     @GetMapping("/imagesV3/{boardId}")
     public Resource profileImageV3(@PathVariable Long boardId) throws MalformedURLException{

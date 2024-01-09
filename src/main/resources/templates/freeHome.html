@@ -2,87 +2,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(238, 238, 238);
+        }
+        #button-search {
+            color: white !important;
+            background-color: black !important;
+            border-color: black !important;
+        }
+
+
+
+        a {
+            color: inherit; /* or any color you prefer */
+            text-decoration: none; /* remove underline if desired */
+        }
+
+        a:hover {
+            color: inherit; /* or any color you prefer on hover */
+        }
+
+
+
+    </style>
+
 </head>
 <body>
+<main>
+    <header class="p-3 mb-3 border-bottom" style="background-color: white;">
+        <!-- 임시 변수를 이용하여 객체의 속성 사용 -->
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <strong>나눔의 마음 함께하는 힘</strong>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-12 justify-content-center mb-md-0"
+                    style="padding-left: 100px;">
+                    <li><a href="/donation" class="nav-link px-2 link-secondary">후원 게시판</a></li>
+                    <li><a href="/free" class="nav-link px-2 link-body-emphasis">자유 게시판</a></li>
+                </ul>
+
+
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                             class="rounded-circle" th:if="${loginMember ==null}">
+                        <img th:src="|/my-page/images/${loginMember.profile}|" alt="mdo" width="32" height="32"
+                             class="rounded-circle" th:if="${loginMember !=null}">
+                    </a>
+                    <ul class="dropdown-menu text-small" th:if="${loginMember ==null}">
+                        <li><a class="dropdown-item" th:href="@{/members/add}">회원가입</a>
+                        </li>
+                        <li><a class="dropdown-item" th:href="@{/login}">로그인</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/login}">관리자 로그인</a></li>
+                    </ul>
+
+                    <ul class="dropdown-menu text-small" th:if="${loginMember !=null}" th:object="${loginMember}">
+                        <li><a class="dropdown-item" th:href="@{/my-page/id(id=${loginMember.id})}">마이페이지</a>
+                        </li>
+                        <li><a class="dropdown-item" th:if="${loginMember.role}" th:href="@{/admin/login}">시스템 관리</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>                   <form th:action="@{/logout}" method="post" style="padding-left: 5px;">
+                            <button  type="submit" >
+                                로그아웃
+                            </button>
+                        </form></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+</main>
+
 <div class="container" style="max-width: 600px">
-    <div class="py-5 text-center">
-        <h2>홈 화면</h2>
-    </div>
-    <h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
-    <hr class="my-4">
-    <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg" type="button"
-                    th:onclick="|location.href='@{/my-page/{id}(id=${member.id})}'|">
-                마이페이지
-            </button>
-        </div>
-        <div class="col mt-3" th:if="${member.role}=='O'">
-            <button class="w-100 btn btn-info btn-lg" type="button" th:onclick="|location.href='@{/admin}'|">
-                관리자 페이지
-            </button>
-        </div>
-
-        <div class="col">
-            <form th:action="@{/logout}" method="post">
-                <button class="w-100 btn btn-dark btn-lg" type="submit">
-                    로그아웃
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>이름</th>
-            <th>기부 포인트</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="member : ${pointMember}">
-            <td><a th:text="${member.name}" th:href="@{/my-page/{id}(id=${member.id})}">회원 이름</a></td>
-            <td th:text="${member.totalGivePoint + '원'}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <hr class="my-4">
-
-    <div class="btn-group mb-3" role="group" aria-label="Board Selection">
-        <!-- 전체 게시판 -->
-        <button type="button" class="btn btn-outline-secondary"
-                th:onclick="|location.href='@{/}'|">전체 게시판
-        </button>
-
-        <!-- 기부 게시판 -->
-        <button type="button" class="btn btn-outline-secondary"
-                th:onclick="|location.href='@{/donation}'|">후원 게시판
-        </button>
-
-        <!-- 자유 게시판 -->
-        <button type="button" class="btn btn-outline-secondary"
-                th:onclick="|location.href='@{/free}'|">자유 게시판
-        </button>
-    </div>
-    <!-- 게시판 검색 폼 -->
-    <form method="get" th:object="${boardSearchCond}">
-        <div class="input-group mb-3">
-            <!-- 작성자 검색 -->
-            <input type="text" th:field="*{memberName}" class="form-control" placeholder="작성자 검색"
-                   aria-label="작성자 검색" aria-describedby="button-search">
-            <!-- 게시판 제목 검색 -->
-            <input type="text" th:field="*{title}" class="form-control" placeholder="게시판 제목 검색"
-                   aria-label="게시판 제목 검색" aria-describedby="button-search">
-
-            <button class="btn btn-outline-secondary" type="submit" id="button-search">검색</button>
-        </div>
-    </form>
 
     <!-- 게시판 목록 -->
     <table class="table">
-        <thead>
+        <thead class="table-dark" >
         <tr>
             <th>번호</th>
             <th>작성자</th>
@@ -105,30 +112,48 @@
         <!-- 추가적인 게시판 목록 항목을 필요한 만큼 반복 -->
     </table>
 
-    <!-- 페이징처리 시작 -->
-    <div th:if="${!paging.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${paging.number-1}|}">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                th:classappend="${page == paging.number} ? 'active'"
-                class="page-item">
-                <a th:text="${page+1}" class="page-link" th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${page}|}"></a>
-            </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${paging.number+1}|}">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <!-- 게시판 검색 폼 -->
+    <form method="get" th:object="${boardSearchCond}">
+        <div class="input-group mb-3">
+            <!-- 작성자 검색 -->
+            <input type="text" th:field="*{memberName}" class="form-control" placeholder="작성자 검색"
+                   aria-label="작성자 검색" aria-describedby="button-search">
+            <!-- 게시판 제목 검색 -->
+            <input type="text" th:field="*{title}" class="form-control" placeholder="게시판 제목 검색"
+                   aria-label="게시판 제목 검색" aria-describedby="button-search">
+
+            <button class="btn btn-outline-secondary" type="submit" id="button-search">검색</button>
+        </div>
+    </form>
+
+
+    <!-- 페이징처리 시작 --><div th:if="${!paging.isEmpty()}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${paging.number-1}|}"
+               style="background-color: black; color: white;">
+                <span>이전</span>
+            </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+            th:if="${page >= paging.number-5 and page <= paging.number+5}"
+            th:classappend="${page == paging.number} ? 'active'"
+            class="page-item">
+            <a style="background-color: white; color: black;" th:text="${page+1}" class="page-link" th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${page}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{|?memberName=${boardSearchCond.memberName}&title=${boardSearchCond.title}&page=${paging.number+1}|}"
+               style="background-color: black; color: white;">
+                <span>다음</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
     <!-- 페이징처리 끝 -->
-    <button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board}'|">
+    <button class="btn btn-dark" type="button" th:onclick="|location.href='@{/board}'|">
 
         글쓰기
     </button>
@@ -139,7 +164,9 @@
     <div class="counter" id="totalCounter" th:text="|total: ${visit.get().total}|">총 방문자 수: 100</div>
     <div class="counter" id="todayCounter" th:text="|today: ${visit.get().today}|">오늘 방문자 수: 10</div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

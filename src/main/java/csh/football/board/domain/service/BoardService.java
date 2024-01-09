@@ -67,7 +67,7 @@ public class BoardService {
     }
 
     public Board boardSaveService(Member member, BoardDto fboard) throws IOException {
-        Board board=new Board();
+        Board board = new Board();
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         int boardId = addIdService(member.getId());
@@ -76,7 +76,7 @@ public class BoardService {
         board.setContent(fboard.getContent());
         board.setBoardType(fboard.isBoardType());
 
-        if(board.isBoardType()){
+        if (board.isBoardType()) {
             board.setOptionPoint(fboard.getOptionPoint());
         }
 
@@ -87,10 +87,11 @@ public class BoardService {
         board.setDate(sdf.format(date));
 
 
-
         //게시물 사진 저장
         String uploadImage = fileStore.storeFile(fboard.getBoardImage());
-        board.setBoardImage(uploadImage);
+        if (uploadImage == null) {
+            board.setBoardImage("boardBasic.jpg");
+        }
         boardRepository.save(board);
 
         //게시물 생성할때 포인트 점수 100
@@ -99,7 +100,7 @@ public class BoardService {
     }
 
     public void boardUpdateService(Member member, BoardDto fboard) throws IOException {
-        Board board=new Board();
+        Board board = new Board();
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         int boardId = addIdService(member.getId());
@@ -113,11 +114,11 @@ public class BoardService {
         Date date = new Date();
         board.setDate(sdf.format(date));
 
-        log.info("abc={}",board.getDate());
+        log.info("abc={}", board.getDate());
 
 
         //게시물 사진 저장
-        log.info("aa={}",fboard.getBoardImage());
+        log.info("aa={}", fboard.getBoardImage());
         String uploadImage = fileStore.storeFile(fboard.getBoardImage());
         board.setBoardImage(uploadImage);
         boardRepository.save(board);
@@ -147,15 +148,15 @@ public class BoardService {
 
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("date"));
-        Pageable pageable = PageRequest.of(page, 5,Sort.by(sorts));
-        log.info("a={}",memberName);
-        log.info("b={}",title);
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(sorts));
+        log.info("a={}", memberName);
+        log.info("b={}", title);
 
-        if(memberName.equals("") && title.equals("")){
-            return jpaBoardRepository.findAll(pageable);
+        if (memberName.equals("") && title.equals("")) {
+            return jpaBoardRepository.findAllByBoardTypeFalse(pageable);
         }
 
-        return jpaBoardRepository.findByMemberNameContainingAndTitleContaining(memberName, title, pageable);
+        return jpaBoardRepository.findByMemberNameContainingAndTitleContainingAndBoardTypeFalse(memberName, title, pageable);
     }
 
     public void delete(Board board) {

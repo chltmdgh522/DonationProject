@@ -16,7 +16,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/members/add", "/login", "/css/**", "/*.ico", "/error",
-                        "/logout", "/forgot-password", "/new-password", "/admin/login","/admin/logout","/tem");
+                        "/logout", "/forgot-password", "/new-password",
+                        "/free","/donation","/admin/login","/admin/logout","/tem",
+                        "/my-page/imagesV3/{boardId}","/my-page/imagesV2/{memberId}",
+                        "/my-page/images/{boardId}");
     }
 
 }
