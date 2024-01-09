@@ -7,5 +7,6 @@ public class CommentSearch {
 
     String memberName="";
 
+
     String content="";
 }
