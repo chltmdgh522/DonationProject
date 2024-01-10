@@ -36,7 +36,7 @@ public class PasswordController {
     public String changePassword(@ModelAttribute("password") ChangePassword password,
                                  @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                  Model model) {
-        model.addAttribute("member", loginMember);
+        model.addAttribute("loginMember", loginMember);
         return "password/change-password";
     }
 
@@ -77,11 +77,13 @@ public class PasswordController {
 
     @GetMapping("/forgot-password")
     public String getForgotPassword(@ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
-                                    @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+                                    @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                                    Model model) {
 
         if (loginMember != null) {
             return "redirect:/";
         }
+        model.addAttribute("loginMember", loginMember);
         return "password/forgot-password";
     }
 
@@ -118,24 +120,24 @@ public class PasswordController {
                          @SessionAttribute(name = SessionConst.TEM_MEMBER, required = false) String loginMember2,
                          Model model,
                          HttpServletRequest request) {
-        log.info("d");
-        if (loginMember != null || loginMember2 ==null) {
+
+        if (loginMember != null || loginMember2 == null) {
             return "redirect:/";
         }
 
-        Random random=new Random();
+        Random random = new Random();
         int randomNumber = 1000 + random.nextInt(9000);
 
         Optional<Member> member = memberRepository.findByLoginId(loginMember2);
         memberService.updatePassword(member.get().getId(), String.valueOf(randomNumber));
-        model.addAttribute("password",randomNumber);
+        model.addAttribute("password", randomNumber);
 
         HttpSession session = request.getSession(false);
 
         if (session != null) {
             session.invalidate();
         }
-
+        model.addAttribute("loginMember", loginMember);
         return "password/tem";
     }
 }

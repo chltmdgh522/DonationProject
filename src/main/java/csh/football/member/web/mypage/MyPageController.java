@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -59,6 +60,7 @@ public class MyPageController {
         //해당 아이디 게시판
         List<Board> boards = boardService.userCheckService(memberId);
         model.addAttribute("boards", boards);
+        model.addAttribute("loginMember",loginMember);
 
         return "mypage/my-page";
 
@@ -71,6 +73,9 @@ public class MyPageController {
 
         memberRepository.findByLoginId(member.getLoginId())
                 .ifPresent(member1 -> model.addAttribute("member", member1));
+
+
+        model.addAttribute("loginMember",member);
         return "mypage/my-page-edit";
     }
 
@@ -79,6 +84,7 @@ public class MyPageController {
             @Validated
             @ModelAttribute("member") MyPageMember mpMember,
             BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) throws IOException {
         if (bindingResult.hasErrors()) {
             return "/mypage/my-page-edit";
@@ -98,7 +104,8 @@ public class MyPageController {
                     memberRepository.updateDescriptionMemberNameProfile(member1.getId(), member);
                     myPageService.boardNameUpdate(member1.getId(), mpMember);
                 });
-        return "redirect:/";
+        redirectAttributes.addAttribute("memberId",loginMember.getId());
+        return "redirect:/my-page/{memberId}";
 
     }
 

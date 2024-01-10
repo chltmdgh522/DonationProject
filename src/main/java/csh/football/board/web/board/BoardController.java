@@ -92,10 +92,13 @@ public class BoardController {
         if (board.getModify().equals("M")) {
             model.addAttribute("update", "(수정됨)");
         }
+        if (board.getModify().equals("X")) {
+            model.addAttribute("update", "");
+        }
         int process = (int) ((float) board.getGivePoint() / board.getOptionPoint() * 100);
 
         log.info("d={}",process);
-
+        model.addAttribute("loginMember",loginMember);
 
         Optional<Board> fboard = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
 
@@ -107,7 +110,6 @@ public class BoardController {
         model.addAttribute("process", process);
         model.addAttribute("memberId", memberId);
         model.addAttribute("fcomment", fcomment);
-        model.addAttribute("member", loginMember);
         model.addAttribute("board", board);
         model.addAttribute("give",giveComment);
         return "board/board";

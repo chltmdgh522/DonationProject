@@ -90,7 +90,10 @@ public class BoardService {
         //게시물 사진 저장
         String uploadImage = fileStore.storeFile(fboard.getBoardImage());
         if (uploadImage == null) {
+            log.info("d123");
             board.setBoardImage("boardBasic.jpg");
+        }else{
+            board.setBoardImage(uploadImage);
         }
         boardRepository.save(board);
 
