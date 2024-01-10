@@ -26,33 +26,33 @@ public class AdminMemberController {
 
     //관리자 페이지
     @GetMapping
-    public String adminInformation(@SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false)Member loginMember){
-        if(loginMember.getRole().equals("X")){
+    public String adminInformation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+        if (loginMember.getRole().equals("X")) {
             return "redirect:/";
         }
         return "admin/admin";
     }
 
     @GetMapping("/member")
-    public String memberInformation(@SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false)Member loginMember,
+    public String memberInformation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                     @ModelAttribute("admin") JpaMember member,
                                     @ModelAttribute("memberSearchCond") MemberSearch cond,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
-                                    Model model){
-        if(loginMember.getRole().equals("X")){
+                                    Model model) {
+        if (loginMember.getRole().equals("X")) {
             return "redirect:/";
         }
         Page<JpaMember> list = adminService.getList(cond.getLoginId(), page);
 
-        model.addAttribute("paging",list);
+        model.addAttribute("paging", list);
         return "admin/adminMember";
     }
 
     @PostMapping("/{loginId}/point")
     public String point(@ModelAttribute JpaMember member,
                         @PathVariable String loginId,
-                        Model model){
-        log.info("member={}",member.getPoint());
+                        Model model) {
+        log.info("member={}", member.getPoint());
         Optional<Member> fmember = memberRepository.findByLoginId(loginId);
         model.addAttribute("member", member);
         memberRepository.updatePoint(fmember.get().getId(), member.getPoint());
@@ -61,14 +61,13 @@ public class AdminMemberController {
 
     @PostMapping("/{loginId}/givePoint")
     public String givPoint(@ModelAttribute JpaMember member,
-                        @PathVariable String loginId,
-                        Model model){
+                           @PathVariable String loginId,
+                           Model model) {
         Optional<Member> fmember = memberRepository.findByLoginId(loginId);
         model.addAttribute("member", member);
         memberRepository.updateTotalGivePoint(fmember.get().getId(), member.getTotalGivePoint());
         return "redirect:/admin/member";
     }
-
 
 
     @DeleteMapping("/{loginId}")

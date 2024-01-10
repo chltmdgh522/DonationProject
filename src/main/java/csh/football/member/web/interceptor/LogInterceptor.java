@@ -19,10 +19,10 @@ public class LogInterceptor implements HandlerInterceptor {
         String uuid = UUID.randomUUID().toString();
 
         request.setAttribute(LOG_ID, uuid);
-        if(handler instanceof HandlerMethod){
+        if (handler instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) handler; //호출한 컨트롤러 메서드의 모든 정보가 포함되어 있다.
         }
-        log.info("REQUEST [{}][{}][{}]",uuid,requestURI,handler);
+        log.info("REQUEST [{}][{}][{}]", uuid, requestURI, handler);
 
         return true;
 
@@ -30,19 +30,19 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("postHandle [{}]",modelAndView);
+        log.info("postHandle [{}]", modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         String requestURI = request.getRequestURI();
-        String logId = (String)request.getAttribute(LOG_ID);
+        String logId = (String) request.getAttribute(LOG_ID);
 
-        log.info("RESPONSE [{}][{}][{}]",logId,requestURI,handler);
+        log.info("RESPONSE [{}][{}][{}]", logId, requestURI, handler);
 
-        if(ex != null){
-            log.error("에러",ex);
+        if (ex != null) {
+            log.error("에러", ex);
         }
-        
+
     }
 }

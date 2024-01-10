@@ -26,18 +26,19 @@ public class AdminCommentController {
     private final CommentRepository commentRepository;
 
     @GetMapping("/comment")
-    public String memberInformation(@SessionAttribute(name= SessionConst.LOGIN_MEMBER, required = false)Member loginMember,
+    public String memberInformation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                                     @ModelAttribute("commentSearchCond") CommentSearch cond,
                                     @RequestParam(value = "page", defaultValue = "0") int page,
-                                    Model model){
-        if(loginMember.getRole().equals("X")){
+                                    Model model) {
+        if (loginMember.getRole().equals("X")) {
             return "redirect:/";
         }
-        Page<JpaComment> list = adminService.getListComment(cond.getMemberName(),cond.getContent(), page);
+        Page<JpaComment> list = adminService.getListComment(cond.getMemberName(), cond.getContent(), page);
 
-        model.addAttribute("paging",list);
+        model.addAttribute("paging", list);
         return "admin/adminComment";
     }
+
     @DeleteMapping("/comment/{commentId}")
     public String editDeleteComment(@PathVariable Long commentId) {
 

@@ -30,7 +30,7 @@ public class AdminLoginController {
         if (loginMember != null) {
             return "redirect:/";
         }
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
         return "admin/adminLogin";
     }
 

@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class CommentSearch {
 
-    String memberName="";
+    String memberName = "";
 
 
-    String content="";
+    String content = "";
 }

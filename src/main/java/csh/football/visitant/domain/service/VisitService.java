@@ -15,10 +15,10 @@ import java.util.Optional;
 public class VisitService {
     private final VisitRepository visitRepository;
 
-    public Optional<Visitant> addService(){
+    public Optional<Visitant> addService() {
         Optional<Visitant> visit = visitRepository.findVisit(1);
-        visitRepository.updateTotal(visit.get().getTotal()+1);
-        visitRepository.updateToday(visit.get().getToday()+1);
+        visitRepository.updateTotal(visit.get().getTotal() + 1);
+        visitRepository.updateToday(visit.get().getToday() + 1);
         return visit;
     }
 

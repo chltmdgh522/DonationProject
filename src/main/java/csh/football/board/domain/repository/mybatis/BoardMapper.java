@@ -12,15 +12,16 @@ import java.util.Optional;
 public interface BoardMapper {
     void save(Board board);
 
-    void updateMemberName(@Param("memberId") String memberId,@Param("memberName") String memberName);
+    void updateMemberName(@Param("memberId") String memberId, @Param("memberName") String memberName);
 
     void updateTitleAndContent(Board board);
 
     void updateViewCount(@Param("id") Long id, @Param("viewCount") int viewCount);
 
-    Optional<Board> findByMemberIdAndBoardId(@Param("memberId")String memberId, @Param("boardId") String boardId);
+    Optional<Board> findByMemberIdAndBoardId(@Param("memberId") String memberId, @Param("boardId") String boardId);
 
     Optional<Board> findById(Long id);
+
     List<Board> findAll();
 
     List<Board> findSearchAll(BoardSearchCond boardSearchCond);

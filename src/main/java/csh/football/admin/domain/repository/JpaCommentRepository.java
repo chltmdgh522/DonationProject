@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface JpaCommentRepository extends JpaRepository<JpaComment, Long> {
     Page<JpaComment> findAll(Pageable pageable);
 
-    Page<JpaComment> findByMemberNameContainingAndContentContaining(String name,String content, Pageable pageable);
+    Page<JpaComment> findByMemberNameContainingAndContentContaining(String name, String content, Pageable pageable);
 
 }

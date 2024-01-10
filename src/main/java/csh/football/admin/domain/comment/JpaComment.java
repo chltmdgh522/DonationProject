@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@Entity(name="Comment")
+@Entity(name = "Comment")
 @Data
 public class JpaComment {
 
@@ -22,7 +22,7 @@ public class JpaComment {
 
     String date;
 
-    public JpaComment(){
+    public JpaComment() {
 
     }
 }

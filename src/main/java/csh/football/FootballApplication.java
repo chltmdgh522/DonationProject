@@ -9,9 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class FootballApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FootballApplication.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(FootballApplication.class, args);
 
-	}
+    }
 
 }

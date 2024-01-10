@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaBoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findAllByBoardTypeFalse(Pageable pageable);
+
     Page<Board> findAll(Pageable pageable);
 
     Page<Board> findByMemberNameContainingAndTitleContainingAndBoardTypeFalse(

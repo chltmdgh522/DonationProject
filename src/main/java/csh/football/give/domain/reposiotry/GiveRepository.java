@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface GiveRepository {
 
-    public void save(Give give);
+    void save(Give give);
 
-    public Optional<Give> findByMemberId(String memberId);
+    Optional<Give> findByMemberId(String memberId);
 
-    public List<Give> findByBoardId(Long BoardId);
+    List<Give> findByBoardId(Long BoardId);
 
 
 }

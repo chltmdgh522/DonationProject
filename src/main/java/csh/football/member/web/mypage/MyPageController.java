@@ -60,7 +60,7 @@ public class MyPageController {
         //해당 아이디 게시판
         List<Board> boards = boardService.userCheckService(memberId);
         model.addAttribute("boards", boards);
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
 
         return "mypage/my-page";
 
@@ -75,7 +75,7 @@ public class MyPageController {
                 .ifPresent(member1 -> model.addAttribute("member", member1));
 
 
-        model.addAttribute("loginMember",member);
+        model.addAttribute("loginMember", member);
         return "mypage/my-page-edit";
     }
 
@@ -92,7 +92,7 @@ public class MyPageController {
         Member member = new Member();
         String uploadImage = fileStore.storeFile(mpMember.getProfileImage());
         member.setProfile(uploadImage);
-        if (uploadImage ==null) {
+        if (uploadImage == null) {
             Optional<Member> fmember = memberRepository.findByLoginId(loginMember.getLoginId());
             member.setProfile(fmember.get().getProfile());
         }
@@ -104,7 +104,7 @@ public class MyPageController {
                     memberRepository.updateDescriptionMemberNameProfile(member1.getId(), member);
                     myPageService.boardNameUpdate(member1.getId(), mpMember);
                 });
-        redirectAttributes.addAttribute("memberId",loginMember.getId());
+        redirectAttributes.addAttribute("memberId", loginMember.getId());
         return "redirect:/my-page/{memberId}";
 
     }

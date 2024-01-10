@@ -18,10 +18,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
 
-
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public String save(Member member){
+    public String save(Member member) {
         //아이디 중복 방지
         Optional<Member> fmember = memberRepository.findByLoginId(member.getLoginId());
         if (fmember.isPresent()) {
@@ -43,15 +42,15 @@ public class MemberService {
         return null;
     }
 
-    public Member findByMemberId(String id){
+    public Member findByMemberId(String id) {
         return memberRepository.findByMemberId(id).orElse(null);
     }
 
-    public void updatePassword(String id, String newPassword){
+    public void updatePassword(String id, String newPassword) {
         memberRepository.updatePassword(id, newPassword);
     }
 
-    public String findIdEmail(ForgotPassword forgotPassword){
+    public String findIdEmail(ForgotPassword forgotPassword) {
         Optional<Member> fmember = memberRepository.findByLoginId(forgotPassword.getLoginId());
         if (fmember.isEmpty()) {
             return "loginId";

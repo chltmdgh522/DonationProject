@@ -18,33 +18,33 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class JdbcTemplateCommentRepository implements CommentRepository{
+public class JdbcTemplateCommentRepository implements CommentRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public JdbcTemplateCommentRepository(DataSource dataSource){
-        this.jdbcTemplate=new NamedParameterJdbcTemplate(dataSource);
+    public JdbcTemplateCommentRepository(DataSource dataSource) {
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public void save(Comment comment){
+    public void save(Comment comment) {
         String sql = "insert into comment (content, member_id, board_id, member_name) " +
                 "values (:content,:memberId,:boardId,:memberName)";
-        KeyHolder keyHolder=new GeneratedKeyHolder();
-        SqlParameterSource param= new BeanPropertySqlParameterSource(comment);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
 
-        jdbcTemplate.update(sql, param,keyHolder);
+        jdbcTemplate.update(sql, param, keyHolder);
     }
 
-    public List<Comment> findByBoardId (Long boardId){
+    public List<Comment> findByBoardId(Long boardId) {
         String sql = "select * from comment where board_id=:id";
-        Map<String, Long> param = Map.of("id",boardId);
+        Map<String, Long> param = Map.of("id", boardId);
         List<Comment> comment = jdbcTemplate.query(sql, param, commentRowMapper());
 
         return comment;
     }
 
     //게시판 한번에 삭제할려고 왜냐면 외래키 때문에 오류남
-    public void deleteBoard(String boardId){
+    public void deleteBoard(String boardId) {
         String sql = "delete from comment where board_id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", boardId);
@@ -52,14 +52,14 @@ public class JdbcTemplateCommentRepository implements CommentRepository{
     }
 
 
-    public void delete(Long commentId){
+    public void delete(Long commentId) {
         String sql = "delete from comment where id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("id", commentId);
         jdbcTemplate.update(sql, param);
     }
 
-    RowMapper<Comment> commentRowMapper(){
+    RowMapper<Comment> commentRowMapper() {
         return BeanPropertyRowMapper.newInstance(Comment.class);
     }
 }

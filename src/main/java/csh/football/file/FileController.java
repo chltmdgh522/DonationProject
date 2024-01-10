@@ -38,7 +38,7 @@ public class FileController {
     //댓글 프로필
     @ResponseBody
     @GetMapping("/imagesV2/{memberId}")
-    public Resource profileImageV2(@PathVariable String memberId) throws MalformedURLException{
+    public Resource profileImageV2(@PathVariable String memberId) throws MalformedURLException {
         Optional<Member> member = memberRepository.findByMemberId(memberId);
         return new UrlResource("file:" + fileStore.getFullPath(member.get().getProfile()));
     }
@@ -47,7 +47,7 @@ public class FileController {
     //게시글 사진
     @ResponseBody
     @GetMapping("/imagesV3/{boardId}")
-    public Resource profileImageV3(@PathVariable Long boardId) throws MalformedURLException{
+    public Resource profileImageV3(@PathVariable Long boardId) throws MalformedURLException {
         Optional<Board> board = boardRepository.findById(boardId);
         return new UrlResource("file:" + fileStore.getFullPath(board.get().getBoardImage()));
     }

@@ -29,30 +29,30 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("loginForm") LoginForm loginForm,
-                            @SessionAttribute(name=SessionConst.LOGIN_MEMBER , required = false) Member loginMember,
+                            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                             Model model) {
 
-        if(loginMember !=null){
+        if (loginMember != null) {
             return "redirect:/";
         }
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
         return "login/loginForm";
     }
 
     @PostMapping("/login")
     public String loginV4(@Validated @ModelAttribute LoginForm form, BindingResult bindingResult,
-                          @RequestParam(defaultValue="/") String redirectURL,
+                          @RequestParam(defaultValue = "/") String redirectURL,
                           HttpServletRequest request) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "/login/loginForm";
         }
         Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
-        if(loginMember==null){
-            bindingResult.reject("loginFail","아이디 또는 비밀번호가 맞지 않습니다.");
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "/login/loginForm";
         }
-        if(loginMember.getRole().equals("O")){
-            bindingResult.reject("super","관리자 계정입니다.");
+        if (loginMember.getRole().equals("O")) {
+            bindingResult.reject("super", "관리자 계정입니다.");
             return "/login/loginForm";
         }
         //로그인 성공 처리
@@ -61,7 +61,7 @@ public class LoginController {
         //세션에 로그인 회원 정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
         Date date = new Date(session.getLastAccessedTime());
-        sessionService.sessionSave(String.valueOf(date),form.getLoginId());
+        sessionService.sessionSave(String.valueOf(date), form.getLoginId());
 
         //포인트 점수 100점
         loginService.point(loginMember);
@@ -70,10 +70,10 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logoutV3(HttpServletRequest request){
+    public String logoutV3(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
-        if(session != null){
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/";

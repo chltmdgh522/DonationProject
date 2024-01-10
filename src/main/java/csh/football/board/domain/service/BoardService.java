@@ -92,7 +92,7 @@ public class BoardService {
         if (uploadImage == null) {
             log.info("d123");
             board.setBoardImage("boardBasic.jpg");
-        }else{
+        } else {
             board.setBoardImage(uploadImage);
         }
         boardRepository.save(board);

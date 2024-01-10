@@ -34,8 +34,8 @@ public class MyBatisBoardRepository implements BoardRepository {
     }
 
     @Override
-    public void updateViewCount(Long id,int viewCount) {
-        boardMapper.updateViewCount(id,viewCount
+    public void updateViewCount(Long id, int viewCount) {
+        boardMapper.updateViewCount(id, viewCount
         );
     }
 

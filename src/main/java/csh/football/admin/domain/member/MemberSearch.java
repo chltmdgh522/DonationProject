@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class MemberSearch {
 
-    String loginId="";
+    String loginId = "";
 }

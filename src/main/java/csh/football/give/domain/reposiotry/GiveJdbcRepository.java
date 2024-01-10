@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Repository
 @Slf4j
-public class GiveJdbcRepository implements GiveRepository{
+public class GiveJdbcRepository implements GiveRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -31,15 +31,15 @@ public class GiveJdbcRepository implements GiveRepository{
     public void save(Give give) {
         String sql = "insert into give(give_point,member_id,board_id,give_text,name,email) " +
                 "values(:givePoint,:memberId,:boardId,:giveText,:name,:email)";
-        SqlParameterSource param=new BeanPropertySqlParameterSource(give);
+        SqlParameterSource param = new BeanPropertySqlParameterSource(give);
         KeyHolder key = new GeneratedKeyHolder();
-        jdbcTemplate.update(sql,param,key);
+        jdbcTemplate.update(sql, param, key);
     }
 
     @Override
     public Optional<Give> findByMemberId(String memberId) {
         String sql = "select * from give where member_id=:memberId";
-        Map<String,String> param= Map.of("memberId",memberId);
+        Map<String, String> param = Map.of("memberId", memberId);
         Give give = jdbcTemplate.queryForObject(sql, param, giveRowMapper());
         return Optional.ofNullable(give);
     }
@@ -47,11 +47,11 @@ public class GiveJdbcRepository implements GiveRepository{
     @Override
     public List<Give> findByBoardId(Long boardId) {
         String sql = "select * from give where board_id=:boardId";
-        Map<String,Long> param= Map.of("boardId",boardId);
+        Map<String, Long> param = Map.of("boardId", boardId);
         return jdbcTemplate.query(sql, param, giveRowMapper());
     }
 
-    RowMapper<Give> giveRowMapper(){
+    RowMapper<Give> giveRowMapper() {
         return new BeanPropertyRowMapper<>(Give.class);
     }
 }

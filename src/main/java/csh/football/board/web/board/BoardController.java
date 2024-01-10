@@ -39,11 +39,12 @@ public class BoardController {
     private final GiveRepository giveRepository;
 
     private final FileStore fileStore;
+
     //게시판 생성뷰
     @GetMapping
     public String boardCreate(
             @ModelAttribute Board board,
-            @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model) {
         Member member = boardService.findByMemberId(loginMember.getId());
         if (member == null) {
@@ -52,7 +53,7 @@ public class BoardController {
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         model.addAttribute("board", board);
-        model.addAttribute("member",loginMember);
+        model.addAttribute("member", loginMember);
         return "board/boardCreate";
     }
 
@@ -61,16 +62,16 @@ public class BoardController {
     public String createBoard(
             @ModelAttribute("board") BoardDto board,
             RedirectAttributes redirectAttributes,
-            @SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember
-            ) throws IOException {
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember
+    ) throws IOException {
         Member member = boardService.findByMemberId(loginMember.getId());
         if (member == null) {
             return "/error/4xx";
         }
         Board board1 = boardService.boardSaveService(member, board);
 
-        redirectAttributes.addAttribute("memberId",loginMember.getId());
-        redirectAttributes.addAttribute("boardId",board1.getBoardId());
+        redirectAttributes.addAttribute("memberId", loginMember.getId());
+        redirectAttributes.addAttribute("boardId", board1.getBoardId());
 
         return "redirect:/board/{memberId}/{boardId}";
     }
@@ -97,8 +98,8 @@ public class BoardController {
         }
         int process = (int) ((float) board.getGivePoint() / board.getOptionPoint() * 100);
 
-        log.info("d={}",process);
-        model.addAttribute("loginMember",loginMember);
+        log.info("d={}", process);
+        model.addAttribute("loginMember", loginMember);
 
         Optional<Board> fboard = boardRepository.findByMemberIdAndBoardId(memberId, boardId);
 
@@ -111,7 +112,7 @@ public class BoardController {
         model.addAttribute("memberId", memberId);
         model.addAttribute("fcomment", fcomment);
         model.addAttribute("board", board);
-        model.addAttribute("give",giveComment);
+        model.addAttribute("give", giveComment);
         return "board/board";
     }
 
@@ -131,9 +132,9 @@ public class BoardController {
     //게시판 편집뷰
     @GetMapping("/{boardId}/edit")
     public String editBoard(
-                            @PathVariable String boardId,
-                            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                            Model model) {
+            @PathVariable String boardId,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+            Model model) {
         Board board = boardService.boardCheckService(loginMember.getId(), boardId);
         if (board == null || !Objects.equals(board.getMemberId(), loginMember.getId())) {
             return "error/4xx";
@@ -159,7 +160,7 @@ public class BoardController {
         String uploadImage = fileStore.storeFile(fboard.getBoardImage());
         board.setBoardImage(uploadImage);
 
-        if (uploadImage ==null) {
+        if (uploadImage == null) {
             Optional<Board> ffboard = boardRepository.findById(board.getId());
             board.setBoardImage(ffboard.get().getBoardImage());
         }
@@ -169,7 +170,7 @@ public class BoardController {
         }
         boardRepository.updateTitleAndContent(board);
 
-        redirectAttributes.addAttribute("memberId",loginMember.getId());
+        redirectAttributes.addAttribute("memberId", loginMember.getId());
 
         return "redirect:/board/{memberId}/{boardId}";
     }

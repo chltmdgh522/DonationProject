@@ -1,4 +1,5 @@
 package csh.football;
+
 import csh.football.board.domain.board.Board;
 import csh.football.board.domain.repository.BoardRepository;
 import csh.football.board.domain.repository.BoardSearchCond;
@@ -51,7 +52,7 @@ public class HomeController {
 
 
         //세션이 유지되면 로그인으로 이동
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
         model.addAttribute("paging", paging);
         model.addAttribute("board", boards);
         model.addAttribute("visit", visit);
@@ -61,23 +62,22 @@ public class HomeController {
 
     @GetMapping("/donation")
     public String homeDonation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                                    Model model) {
+                               Model model) {
 
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
 
 
-
         List<Member> pointMember = memberRepository.findTotalGivePoint();
 
         List<Board> boards = boardRepository.findAll();
-        List<Board> all=new ArrayList<>();
-        for(Board board : boards){
-            if(board.isBoardType()){
-            all.add(board);
+        List<Board> all = new ArrayList<>();
+        for (Board board : boards) {
+            if (board.isBoardType()) {
+                all.add(board);
             }
         }
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
 
 
         //세션이 유지되면 로그인으로 이동
@@ -89,9 +89,9 @@ public class HomeController {
 
     @GetMapping("/free")
     public String homeFree(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
-                               Model model,
-                               @ModelAttribute("boardSearchCond") BoardSearchCond boardSearchCond,
-                               @RequestParam(value = "page", defaultValue = "0") int page) {
+                           Model model,
+                           @ModelAttribute("boardSearchCond") BoardSearchCond boardSearchCond,
+                           @RequestParam(value = "page", defaultValue = "0") int page) {
 
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
@@ -105,7 +105,7 @@ public class HomeController {
         List<Board> boards = boardRepository.findSearchAll(boardSearchCond);
         List<Member> pointMember = memberRepository.findTotalGivePoint();
 
-        model.addAttribute("loginMember",loginMember);
+        model.addAttribute("loginMember", loginMember);
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("paging", paging);
         model.addAttribute("board", boards);

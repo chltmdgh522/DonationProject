@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@Entity(name="Member")
+@Entity(name = "Member")
 @Data
 public class JpaMember {
 
@@ -28,7 +28,7 @@ public class JpaMember {
     private String date;
 
 
-    public JpaMember(){
+    public JpaMember() {
 
     }
 }
