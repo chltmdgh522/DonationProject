@@ -6,6 +6,8 @@ import csh.football.member.domain.member.Member;
 import csh.football.member.web.login.loginform.LoginForm;
 import csh.football.member.web.session.SessionConst;
 import csh.football.member.web.session.SessionService;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -25,6 +28,8 @@ import java.util.Date;
 public class LoginController {
     private final LoginService loginService;
     private final SessionService sessionService;
+
+    private final VisitService visitService;
 
 
     @GetMapping("/login")
@@ -35,6 +40,10 @@ public class LoginController {
         if (loginMember != null) {
             return "redirect:/";
         }
+
+
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("loginMember", loginMember);
         return "login/loginForm";
     }
@@ -42,17 +51,24 @@ public class LoginController {
     @PostMapping("/login")
     public String loginV4(@Validated @ModelAttribute LoginForm form, BindingResult bindingResult,
                           @RequestParam(defaultValue = "/") String redirectURL,
-                          HttpServletRequest request) {
+                          HttpServletRequest request,Model model) {
+        Optional<Visitant> visit = visitService.addService();
+
         if (bindingResult.hasErrors()) {
+            model.addAttribute("visit", visit);
             return "/login/loginForm";
         }
         Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            model.addAttribute("visit", visit);
+
             return "/login/loginForm";
         }
         if (loginMember.getRole().equals("O")) {
+
             bindingResult.reject("super", "관리자 계정입니다.");
+            model.addAttribute("visit", visit);
             return "/login/loginForm";
         }
         //로그인 성공 처리

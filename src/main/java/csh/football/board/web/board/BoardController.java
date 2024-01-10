@@ -11,6 +11,8 @@ import csh.football.give.domain.give.Give;
 import csh.football.give.domain.reposiotry.GiveRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,7 @@ import java.util.Optional;
 @RequestMapping("/board")
 public class BoardController {
     int num = 0;
-
+    private final VisitService visitService;
     private final BoardRepository boardRepository; // 굳이 서비스 만들기 귀찮다...
 
     private final JdbcTemplateCommentRepository commentRepository;
@@ -50,10 +52,13 @@ public class BoardController {
         if (member == null) {
             return "/error/4xx";
         }
+        Optional<Visitant> visit = visitService.addService();
         board.setMemberName(member.getName());
         board.setMemberId(member.getId());
         model.addAttribute("board", board);
-        model.addAttribute("member", loginMember);
+        model.addAttribute("loginMember", loginMember);
+
+        model.addAttribute("visit", visit);
         return "board/boardCreate";
     }
 
@@ -107,7 +112,8 @@ public class BoardController {
 
 
         List<Give> giveComment = giveRepository.findByBoardId(fboard.get().getId());
-
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("process", process);
         model.addAttribute("memberId", memberId);
         model.addAttribute("fcomment", fcomment);
@@ -139,7 +145,10 @@ public class BoardController {
         if (board == null || !Objects.equals(board.getMemberId(), loginMember.getId())) {
             return "error/4xx";
         }
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("board", board);
+        model.addAttribute("loginMember", loginMember);
         return "board/boardEdit";
     }
 

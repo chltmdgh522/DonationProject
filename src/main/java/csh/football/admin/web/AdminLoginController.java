@@ -5,6 +5,8 @@ import csh.football.admin.domain.service.AdminService;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.login.loginform.LoginForm;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/admin")
 @Slf4j
 @RequiredArgsConstructor
 public class AdminLoginController {
     private final AdminService adminService;
+    private final VisitService visitService;
 
     @GetMapping("/login")
     public String adminLogin(@ModelAttribute("member") LoginForm member,
@@ -30,6 +35,8 @@ public class AdminLoginController {
         if (loginMember != null) {
             return "redirect:/";
         }
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("loginMember", loginMember);
         return "admin/adminLogin";
     }
@@ -37,19 +44,21 @@ public class AdminLoginController {
     @PostMapping("/login")
     public String adminLoginProcess(@Validated @ModelAttribute("member") LoginForm member,
                                     BindingResult bindingResult,
-                                    HttpServletRequest request) {
-
+                                    HttpServletRequest request,Model model) {
+        Optional<Visitant> visit = visitService.addService();
         if (bindingResult.hasErrors()) {
+            model.addAttribute("visit", visit);
             return "admin/adminLogin";
         }
         Member adminLogin = adminService.adminLogin(member.getLoginId(), member.getPassword());
         if (adminLogin == null) {
-            log.info("zzz");
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            model.addAttribute("visit", visit);
             return "admin/adminLogin";
         }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, adminLogin);
+
 
         return "redirect:/";
     }

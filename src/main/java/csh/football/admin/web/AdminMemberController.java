@@ -6,6 +6,8 @@ import csh.football.admin.domain.service.AdminService;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,15 +23,22 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminMemberController {
     private final AdminService adminService;
+    private final VisitService visitService;
 
     private final MemberRepository memberRepository;
 
     //관리자 페이지
     @GetMapping
-    public String adminInformation(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
+    public String adminInformation(
+            Model model,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember) {
         if (loginMember.getRole().equals("X")) {
             return "redirect:/";
         }
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
+        model.addAttribute("loginMember",loginMember);
+
         return "admin/admin";
     }
 
@@ -43,7 +52,9 @@ public class AdminMemberController {
             return "redirect:/";
         }
         Page<JpaMember> list = adminService.getList(cond.getLoginId(), page);
-
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
+        model.addAttribute("loginMember",loginMember);
         model.addAttribute("paging", list);
         return "admin/adminMember";
     }

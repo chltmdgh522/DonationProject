@@ -6,6 +6,7 @@ import csh.football.comment.domain.Comment;
 import csh.football.comment.domain.repository.jdbctemplate.JdbcTemplateCommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final BoardRepository boardRepository;
+
 
     private final JdbcTemplateCommentRepository commentRepository;
 

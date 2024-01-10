@@ -9,6 +9,8 @@ import csh.football.board.domain.board.Board;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.mypage.MyPageService;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -36,6 +38,8 @@ public class MyPageController {
     private final BoardService boardService;
     private final MyPageService myPageService;
     private final FileStore fileStore;
+    private final VisitService visitService;
+
 
     @GetMapping("/{memberId}")
     public String myPageHome(
@@ -59,6 +63,8 @@ public class MyPageController {
 
         //해당 아이디 게시판
         List<Board> boards = boardService.userCheckService(memberId);
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("boards", boards);
         model.addAttribute("loginMember", loginMember);
 
@@ -73,7 +79,8 @@ public class MyPageController {
 
         memberRepository.findByLoginId(member.getLoginId())
                 .ifPresent(member1 -> model.addAttribute("member", member1));
-
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
 
         model.addAttribute("loginMember", member);
         return "mypage/my-page-edit";

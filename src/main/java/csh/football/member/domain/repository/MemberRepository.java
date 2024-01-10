@@ -48,7 +48,7 @@ public class MemberRepository {
                 .addValue("loginId", member.getLoginId())
                 .addValue("password", member.getPassword())
                 .addValue("name", member.getName())
-                .addValue("gender", member.getMemberType().getDescription())
+                .addValue("gender", "남자")//member.getMemberType().getDescription()
                 .addValue("description", member.getDescription())
                 .addValue("email", member.getEmail())
                 .addValue("point", member.getPoint())

@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/logout", "/forgot-password", "/new-password",
                         "/free", "/donation", "/admin/login", "/admin/logout", "/tem",
                         "/my-page/imagesV3/{boardId}", "/my-page/imagesV2/{memberId}",
-                        "/my-page/images/{boardId}");
+                        "/my-page/images/{boardId}","/my-page/imageV4/{image}");
     }
 
 }

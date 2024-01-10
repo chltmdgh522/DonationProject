@@ -51,4 +51,11 @@ public class FileController {
         Optional<Board> board = boardRepository.findById(boardId);
         return new UrlResource("file:" + fileStore.getFullPath(board.get().getBoardImage()));
     }
+
+    //홈 사진
+    @ResponseBody
+    @GetMapping("/imageV4/{image}")
+    public Resource profileImageV4(@PathVariable String image) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(image));
+    }
 }

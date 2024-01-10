@@ -7,6 +7,8 @@ import csh.football.give.domain.reposiotry.GiveRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.domain.repository.MemberRepository;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +26,20 @@ public class GiveController {
     private final BoardRepository boardRepository;
     private final GiveRepository giveRepository;
 
+    private final VisitService visitService;
+
     @GetMapping
     public String giveGet(
             @ModelAttribute Give give,
             @PathVariable String boardId,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model) {
-        Optional<Member> member = memberRepository.findByMemberId(loginMember.getId());
-        model.addAttribute("member", member);
+//        Optional<Member> member = memberRepository.findByMemberId(loginMember.getId());
+//        model.addAttribute("loginMember", member);
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("give", give);
+        model.addAttribute("loginMember", loginMember);
         return "give/give";
     }
 
@@ -62,14 +69,14 @@ public class GiveController {
         //기존 게시판 이동
         Optional<Board> board = boardRepository.findById(boardId);
         String memberId = board.get().getMemberId();
-        redirectAttributes.addAttribute("memberId",memberId);
+        redirectAttributes.addAttribute("memberId", memberId);
 
         //기존 게시판 포인트 증가
-        int resultPoint=board.get().getGivePoint()+give.getGivePoint();
-        boardRepository.updateBoardPoint(boardId,resultPoint);
+        int resultPoint = board.get().getGivePoint() + give.getGivePoint();
+        boardRepository.updateBoardPoint(boardId, resultPoint);
 
         String fboardId = board.get().getBoardId();
-        redirectAttributes.addAttribute("fboardId",fboardId);
+        redirectAttributes.addAttribute("fboardId", fboardId);
 
         return "redirect:/board/{memberId}/{fboardId}";
 

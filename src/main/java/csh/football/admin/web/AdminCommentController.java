@@ -7,6 +7,8 @@ import csh.football.admin.domain.service.AdminService;
 import csh.football.comment.domain.repository.jdbctemplate.CommentRepository;
 import csh.football.member.domain.member.Member;
 import csh.football.member.web.session.SessionConst;
+import csh.football.visitant.domain.service.VisitService;
+import csh.football.visitant.domain.visit.Visitant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,9 @@ import java.util.Optional;
 public class AdminCommentController {
     private final AdminService adminService;
 
+    private final VisitService visitService;
+
+
     private final CommentRepository commentRepository;
 
     @GetMapping("/comment")
@@ -35,7 +40,10 @@ public class AdminCommentController {
         }
         Page<JpaComment> list = adminService.getListComment(cond.getMemberName(), cond.getContent(), page);
 
+        Optional<Visitant> visit = visitService.addService();
+        model.addAttribute("visit", visit);
         model.addAttribute("paging", list);
+        model.addAttribute("loginMember",loginMember);
         return "admin/adminComment";
     }
 
