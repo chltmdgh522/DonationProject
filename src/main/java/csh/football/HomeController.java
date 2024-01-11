@@ -41,7 +41,6 @@ public class HomeController {
         //사이트 방문자수
         Optional<Visitant> visit = visitService.addService();
 
-
         String memberName = boardSearchCond.getMemberName();
         String title = boardSearchCond.getTitle();
 

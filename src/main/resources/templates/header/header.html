@@ -61,9 +61,9 @@
                     </ul>
 
                     <ul class="dropdown-menu text-small" th:if="${loginMember !=null}" th:object="${loginMember}">
-                        <li><a class="dropdown-item" th:href="@{/my-page/id(id=${loginMember.id})}">마이페이지</a>
+                        <li><a class="dropdown-item" th:href="@{/my-page/{id}(id=${loginMember.id})}">마이페이지</a>
                         </li>
-                        <li><a class="dropdown-item" th:if="${loginMember.role}" th:href="@{/admin/login}">시스템 관리</a></li>
+                        <li><a class="dropdown-item" th:if="${loginMember.role} =='O'" th:href="@{/admin}">시스템 관리</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -82,6 +82,7 @@
     </header>
 
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>

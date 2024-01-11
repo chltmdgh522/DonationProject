@@ -34,8 +34,9 @@ public class GiveController {
             @PathVariable String boardId,
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
             Model model) {
-//        Optional<Member> member = memberRepository.findByMemberId(loginMember.getId());
-//        model.addAttribute("loginMember", member);
+        Optional<Member> member = memberRepository.findByMemberId(loginMember.getId());
+        model.addAttribute("point", member.get().getPoint());
+
         Optional<Visitant> visit = visitService.addService();
         model.addAttribute("visit", visit);
         model.addAttribute("give", give);

@@ -49,7 +49,7 @@ public class MemberRepository {
                 .addValue("password", member.getPassword())
                 .addValue("name", member.getName())
                 .addValue("gender", "남자")//member.getMemberType().getDescription()
-                .addValue("description", member.getDescription())
+                .addValue("description", "안녕하세요 반가워요")
                 .addValue("email", member.getEmail())
                 .addValue("point", member.getPoint())
                 .addValue("role", member.getRole())

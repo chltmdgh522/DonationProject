@@ -4,27 +4,15 @@
     <script src="/docs/5.3/assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
-    <meta name="generator" content="Hugo 0.115.4">
+    <link rel="shortcut icon" href="/my-page/imageV4/icon.png" type="image/x-icon">
+
     <title>홈</title>
 
-    <link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/blog/">
 
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-    <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
-    <meta name="theme-color" content="#712cf9">
+
 
 
     <style>
@@ -165,6 +153,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                    <img th:src="|/my-page/imageV4/icon.png|" alt="나눔의 마음 로고" width="50" height="50">
                     <strong>나눔의 마음 함께하는 힘</strong>
                 </a>
 
@@ -172,6 +161,15 @@
                     style="padding-left: 100px;">
                     <li><a href="/donation" class="nav-link px-2 link-secondary">후원 게시판</a></li>
                     <li><a href="/free" class="nav-link px-2 link-body-emphasis">자유 게시판</a></li>
+                </ul>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-12 justify-content-center mb-md-0"
+                    style="padding-left: 100px;">
+                    <li style="font-weight: bold;">TOTAL&nbsp;</li>
+                    <li th:text="|${visit.get().total}명|"></li>
+                    <li>  &nbsp; &nbsp; </li>
+                    <li style="font-weight: bold;">TODAY&nbsp;</li>
+                    <li th:text="|${visit.get().today}명|">TOTAL</li>
                 </ul>
 
 
@@ -193,7 +191,7 @@
                     <ul class="dropdown-menu text-small" th:if="${loginMember !=null}">
                         <li><a class="dropdown-item" th:href="@{/my-page/{id}(id=${loginMember.id})}">마이페이지</a>
                         </li>
-                        <li><a class="dropdown-item" th:if="${loginMember.role =='O'}" th:href="@{/admin/login}">시스템
+                        <li><a class="dropdown-item" th:if="${loginMember.role =='O'}" th:href="@{/admin}">시스템
                             관리</a>
                         </li>
                         <li>
@@ -218,18 +216,18 @@
 <main class="container">
     <div class="p-2 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary" style="background-color: white">
         <div class="col-lg-6 px-0">
-            <h1 class="display-6" size="26">세상을 위한 따뜻한 마음💛</h1>
-            <p class="lead my-3">세계 각국에서 도움의 손길이 필요한 이들이 많습니다. 우리는 그들에게 따뜻한 도움의 손을 내밀어 새로운 희망을 심어줍시다. </p>
+            <h1 class="display-6" size="26" style="font-weight: bold;">세상을 위한 따뜻한 마음💛</h1>
+            <p class="lead my-3" >세계 각국에서 도움의 손길이 필요한 이들이 많습니다. 우리는 그들에게 따뜻한 도움의 손을 내밀어 새로운 희망을 심어줍시다. </p>
         </div>
     </div>
     <div class="row mb-2">
         <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white">
                 <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-                    <h3 class="mb-2">아이들을 도와주세요.</h3>
+                    <strong class="d-inline-block mb-2 text-primary-emphasis" >World</strong>
+                    <h3 class="mb-2" style="font-weight: bold;">아이들을 도와주세요</h3>
                     <p class="card-text mb-auto">아프리카에서는 현재 물이 부족해 어려움을 겪는 어린이들이 많습니다.</p>
-                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    <a href="/donation" class="icon-link gap-1 icon-link-hover stretched-link">
                         더 보기
                         <svg class="bi">
                             <use xlink:href="#chevron-right"/>
@@ -237,7 +235,7 @@
                     </a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img th:src="|/my-page/imagesV3/62|" width="190" height="250"/>
+                    <img th:src="|/my-page/imageV4/home1.jpg|" width="190" height="250"/>
                 </div>
             </div>
         </div>
@@ -245,9 +243,9 @@
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white">
                 <div class="col p-4 d-flex flex-column position-static">
                     <strong class="d-inline-block mb-2 text-success-emphasis">Korea</strong>
-                    <h3 class="mb-2">연탄을 나릅시다</h3>
+                    <h3 class="mb-2" style="font-weight: bold;">연탄을 나릅시다</h3>
                     <p class="mb-auto">서울 한복판 추위와 싸우는 노인들이 많습니다.</p>
-                    <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+                    <a href="/donation" class="icon-link gap-1 icon-link-hover stretched-link">
                         더 보기
                         <svg class="bi">
                             <use xlink:href="#chevron-right"/>
@@ -255,10 +253,48 @@
                     </a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
-                    <img th:src="|/my-page/imagesV3/1|" width="190" height="250"/>
+                    <img th:src="|/my-page/imageV4/home2.jpg|" width="190" height="250"/>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success-emphasis">Free</strong>
+                    <h3 class="mb-2" style="font-weight: bold;">공지사항 확인해주세요</h3>
+                    <p class="mb-auto">자유게시판 들어가셔서 공지사항 확인해주세요.</p>
+                    <a href="/free" class="icon-link gap-1 icon-link-hover stretched-link">
+                        더 보기
+                        <svg class="bi">
+                            <use xlink:href="#chevron-right"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img th:src="|/my-page/imageV4/basic.jpg|" width="190" height="250"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-success-emphasis">World</strong>
+                    <h3 class="mb-2" style="font-weight: bold;">이재민들을 도와주세요</h3>
+                    <p class="mb-auto">셰계 곳곳에 자연재해로 인해 피해자들이 많습니다.</p>
+                    <a href="/donation" class="icon-link gap-1 icon-link-hover stretched-link">
+                        더 보기
+                        <svg class="bi">
+                            <use xlink:href="#chevron-right"/>
+                        </svg>
+                    </a>
+                </div>
+                <div class="col-auto d-none d-lg-block">
+                    <img th:src="|/my-page/imageV4/지진.jpg|" width="190" height="250"/>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
