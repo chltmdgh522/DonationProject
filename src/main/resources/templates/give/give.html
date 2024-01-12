@@ -114,7 +114,6 @@
 
 </main>
 
-
 <form th:action method="post" th:object="${give}" onsubmit="return checkDonationAmount()">
     <label for="name" style=" font-weight: bold;">이름</label>
     <input type="text" id="name" name="name" th:value="${loginMember.name}" disabled/>
