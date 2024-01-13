@@ -6,7 +6,7 @@
 https://www.notion.so/e1fc13b62bdd4360817e4e44b198d417
 
 
-## 🖥️ 시안 영상
+## 🖥️ 시연 화면
 https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 
 
