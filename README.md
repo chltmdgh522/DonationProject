@@ -10,6 +10,13 @@ https://www.notion.so/e1fc13b62bdd4360817e4e44b198d417
 https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 
 
+## 🖥 실행법
+- git clone을 하여 원하는 파일에 배치!
+- 인텔리제이로 그 파일을 실행!
+- 소스코드에 sql 파일을 열어 코드대로 테이블을 설정!
+- applaction.properties에서 본인에 맞게 sql 서버 수정
+
+
 ## 🖥️ 프로젝트 소개
 카카오 같이가치를 참고하면서 만든 프로젝트입니다.
 <br>
