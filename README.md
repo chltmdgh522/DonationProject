@@ -3,7 +3,7 @@
 
 
 ## 📖 개발일지
-https://www.notion.so/e1fc13b62bdd4360817e4e44b198d417
+[https://www.notion.so/e1fc13b62bdd4360817e4e44b198d417](https://cord-may-a5c.notion.site/e1fc13b62bdd4360817e4e44b198d417?pvs=4)
 
 
 ## 🖥️ 시연 화면
@@ -22,11 +22,11 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 <br>
 
 ## 🕰️ 개발 기간
-* 23.11.2일 - 24.1.11일
+* 23.11.2일 - 24.1.11일 (시험기간 제외 사실상 3주)
 
 ### 🧑‍🤝‍🧑 맴버구성
  -  최승호 - 백엔드, 기획, 디자이나, UI 개발, 포트포워딩
- - 
+
 ### ⚙️ 개발 환경
 - `Java 17`
 - **Framework** : Springboot(3.x)
@@ -35,7 +35,7 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 - **IDE** : IntellJ
 
 ## 📌 주요 기능
-#### 로그인/회원가입 -
+#### 로그인/회원가입 
 - DB값 검증
 - 비밀번호 찾기 및 변경 
 - 로그인 시 쿠키(Cookie) 및 세션(Session) 생성
