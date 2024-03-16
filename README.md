@@ -1,8 +1,8 @@
-# Donation_Project
+# 🤷‍♂️Donation_Project🤷‍♂️
 스프링 부트 + MySql
 
 
-## 📖 개발일지
+## ⭐ 개발일지
 [https://www.notion.so/e1fc13b62bdd4360817e4e44b198d417](https://cord-may-a5c.notion.site/e1fc13b62bdd4360817e4e44b198d417?pvs=4)
 
 
@@ -10,14 +10,13 @@
 https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 
 
-## 🖥 실행법
+## 📖 실행법
 - git clone을 하여 원하는 파일에 배치!
 - 인텔리제이로 그 파일을 실행!
 - 소스코드에 sql 파일을 열어 코드대로 테이블을 설정!
 - applaction.properties에서 본인에 맞게 sql 서버 수정
 
-
-## 🖥️ 프로젝트 소개
+## 🌠 프로젝트 소개
 지금까지 스프링 공부를 하면서 토대로 만든 개인 프로젝트입니다. 
 주제는 후원 기부 사이트로 
 여러 사용자들이 기부 사연 게시물을 올리면 다른 사용자들이 사연에 맞게 포인트를 기부하는 방식입니다. 
@@ -29,8 +28,9 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 * 23.11.2일 - 24.1.11일 (시험기간 제외 사실상 3주)
 
 ### 🧑‍🤝‍🧑 맴버구성
- -  최승호 - 백엔드, 기획, 디자이너, UI 개발, 포트포워딩(AWS 할려 했으나 비용 부족!)
-
+ -  최승호 - 백엔드, 기획, 포트포워딩(AWS 할려 했으나 비용 부족!)
+ -  임한규 - 디자이너 및 UI 개발
+   
 ### ⚙️ 개발 환경
 - `Java 17`
 - **Framework** : Springboot(3.x)
@@ -66,7 +66,7 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 - 회원관리, 댓글관리, 게시물관리, 관리자 계정
 
 ## 🌠 느낀점
-- 정보처리기사 자격증 때문에 시간이 없어서 급하게 만들어봤다.
+- 필자가 지금까지 학습한 내용으로 개발을 했다. 
 - 자세한 느낀점은 https://cord-may-a5c.notion.site/a007d8a55c1d465eab688d7971b33946 참고!
 - 추가하고 싶은 기능이 많았다.. 시간이 남으면 차차 추가해보겠다.
 - 서버 배포는 AWS로 할려했으나 비용 때문에 개인 노트북으로 포트포워딩해서 실제로 다른 사용자들이 서비스를 이용했다.
