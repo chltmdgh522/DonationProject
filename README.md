@@ -31,10 +31,10 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
    
 ### ⚙️ 개발 환경
 - **Language** : `Java 17`
-- **Framework** : Springboot(3.0.2)
-- **Database** : MySql
-- **ORM, SQLMapper** : JdbcTemplate, MyBatis, JPA, Spring Data Jpa
-- **IDE** : IntellJ
+- **Framework** : `Springboot(3.0.2)`
+- **Database** : `MySql`
+- **ORM, SQLMapper** : `JdbcTemplate, MyBatis, JPA, Spring Data Jpa`
+- **IDE** : `IntellJ`
 
 ## 📌 주요 기능
 #### 로그인/회원가입 
