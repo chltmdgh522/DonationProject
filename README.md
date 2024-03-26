@@ -30,9 +30,10 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
  -  최승호 - 백엔드, 디자이너, UI 개발, 기획, 포트포워딩(AWS 할려 했으나 비용 부족!)
    
 ### ⚙️ 개발 환경
-- **Language** : `Java 17`
+- **Language** : `Java 17, JavaScript`
 - **Framework** : `Springboot(3.0.2)`
-- **Database** : `MySql`
+  - `MySQL Driver, Lombok, Spring Data JdbcTemplate, Spring Data Jpa, Spring Security, Spring Web, Thymeleaf`
+- **Database** : `MySql 8.0.34`
 - **ORM, SQLMapper** : `JdbcTemplate, MyBatis, JPA, Spring Data Jpa`
 - **IDE** : `IntellJ`
 
