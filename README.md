@@ -38,94 +38,218 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 - **IDE** : `IntellJ`
 
 ### 📁파일 구조
-C:.
-├───main
-│   ├───generated
-│   ├───java
-│   │   └───csh
-│   │       └───donation
-│   │           ├───admin
-│   │           │   ├───domain
-│   │           │   │   ├───comment
-│   │           │   │   ├───member
-│   │           │   │   ├───repository
-│   │           │   │   └───service
-│   │           │   └───web
-│   │           ├───board
-│   │           │   ├───domain
-│   │           │   │   ├───board
-│   │           │   │   ├───repository
-│   │           │   │   │   ├───jdbcTemplate
-│   │           │   │   │   ├───jpa
-│   │           │   │   │   └───mybatis
-│   │           │   │   └───service
-│   │           │   └───web
-│   │           │       └───board
-│   │           ├───comment
-│   │           │   ├───domain
-│   │           │   │   └───repository
-│   │           │   │       └───jdbctemplate
-│   │           │   └───web
-│   │           │       └───comment
-│   │           ├───file
-│   │           ├───give
-│   │           │   ├───domain
-│   │           │   │   ├───give
-│   │           │   │   └───reposiotry
-│   │           │   └───web
-│   │           ├───jdbc
-│   │           │   ├───connection
-│   │           │   └───ex
-│   │           ├───member
-│   │           │   ├───domain
-│   │           │   │   ├───login
-│   │           │   │   ├───member
-│   │           │   │   ├───mypage
-│   │           │   │   ├───password
-│   │           │   │   ├───repository
-│   │           │   │   └───service
-│   │           │   └───web
-│   │           │       ├───interceptor
-│   │           │       ├───login
-│   │           │       │   └───loginform
-│   │           │       ├───member
-│   │           │       ├───mypage
-│   │           │       ├───password
-│   │           │       └───session
-│   │           └───visitant
-│   │               └───domain
-│   │                   ├───repository
-│   │                   ├───service
-│   │                   └───visit
-│   └───resources
-│       ├───csh
-│       │   └───donation
-│       │       └───board
-│       │           └───domain
-│       │               └───repository
-│       │                   └───mybatis
-│       ├───static
-│       │   ├───css
-│       │   │   ├───addlogin
-│       │   │   ├───img
-│       │   │   ├───main
-│       │   │   └───mypage
-│       │   └───img
-│       └───templates
-│           ├───admin
-│           ├───board
-│           ├───css
-│           ├───error
-│           ├───give
-│           ├───header
-│           ├───login
-│           ├───members
-│           ├───mypage
-│           └───password
-└───test
-    └───java
-        └───csh
-            └───donation
+src                                                            
+├─ main                                                        
+│  ├─ generated                                                
+│  ├─ java                                                     
+│  │  └─ csh                                                   
+│  │     └─ donation                                           
+│  │        ├─ admin                                           
+│  │        │  ├─ domain                                       
+│  │        │  │  ├─ comment                                   
+│  │        │  │  │  ├─ CommentSearch.java                     
+│  │        │  │  │  └─ JpaComment.java                        
+│  │        │  │  ├─ member                                    
+│  │        │  │  │  ├─ JpaMember.java                         
+│  │        │  │  │  └─ MemberSearch.java                      
+│  │        │  │  ├─ repository                                
+│  │        │  │  │  ├─ JpaCommentRepository.java              
+│  │        │  │  │  └─ JpaMemberRepository.java               
+│  │        │  │  └─ service                                   
+│  │        │  │     └─ AdminService.java                      
+│  │        │  └─ web                                          
+│  │        │     ├─ AdminCommentController.java               
+│  │        │     ├─ AdminLoginController.java                 
+│  │        │     └─ AdminMemberController.java                
+│  │        ├─ board                                           
+│  │        │  ├─ domain                                       
+│  │        │  │  ├─ board                                     
+│  │        │  │  │  ├─ Board.java                             
+│  │        │  │  │  ├─ BoardDto.java                          
+│  │        │  │  │  └─ BoardType.java                         
+│  │        │  │  ├─ repository                                
+│  │        │  │  │  ├─ jdbcTemplate                           
+│  │        │  │  │  │  └─ JdbcTemplateBoardRepository.java    
+│  │        │  │  │  ├─ jpa                                    
+│  │        │  │  │  │  └─ JpaBoardRepository.java             
+│  │        │  │  │  ├─ mybatis                                
+│  │        │  │  │  │  ├─ BoardMapper.java                    
+│  │        │  │  │  │  └─ MyBatisBoardRepository.java         
+│  │        │  │  │  ├─ BoardRepository.java                   
+│  │        │  │  │  └─ BoardSearchCond.java                   
+│  │        │  │  └─ service                                   
+│  │        │  │     └─ BoardService.java                      
+│  │        │  └─ web                                          
+│  │        │     └─ board                                     
+│  │        │        └─ BoardController.java                   
+│  │        ├─ comment                                         
+│  │        │  ├─ domain                                       
+│  │        │  │  ├─ repository                                
+│  │        │  │  │  └─ jdbctemplate                           
+│  │        │  │  │     ├─ CommentRepository.java              
+│  │        │  │  │     └─ JdbcTemplateCommentRepository.java  
+│  │        │  │  └─ Comment.java                              
+│  │        │  └─ web                                          
+│  │        │     └─ comment                                   
+│  │        │        └─ CommentController.java                 
+│  │        ├─ file                                            
+│  │        │  ├─ FileController.java                          
+│  │        │  └─ FileStore.java                               
+│  │        ├─ give                                            
+│  │        │  ├─ domain                                       
+│  │        │  │  ├─ give                                      
+│  │        │  │  │  └─ Give.java                              
+│  │        │  │  └─ reposiotry                                
+│  │        │  │     ├─ GiveJdbcRepository.java                
+│  │        │  │     └─ GiveRepository.java                    
+│  │        │  └─ web                                          
+│  │        │     └─ GiveController.java                       
+│  │        ├─ jdbc                                            
+│  │        │  ├─ connection                                   
+│  │        │  │  ├─ ConnectionConst.java                      
+│  │        │  │  └─ DBConnectionUtil.java                     
+│  │        │  └─ ex                                           
+│  │        │     ├─ ExTranslator.java                         
+│  │        │     └─ MyDBException.java                        
+│  │        ├─ member                                          
+│  │        │  ├─ domain                                       
+│  │        │  │  ├─ login                                     
+│  │        │  │  │  └─ LoginService.java                      
+│  │        │  │  ├─ member                                    
+│  │        │  │  │  ├─ Member.java                            
+│  │        │  │  │  └─ MemberType.java                        
+│  │        │  │  ├─ mypage                                    
+│  │        │  │  │  ├─ MyPageMember.java                      
+│  │        │  │  │  ├─ MyPageService.java                     
+│  │        │  │  │  └─ UploadFile.java                        
+│  │        │  │  ├─ password                                  
+│  │        │  │  │  ├─ ChangePassword.java                    
+│  │        │  │  │  ├─ ForgotPassword.java                    
+│  │        │  │  │  └─ NewPassword.java                       
+│  │        │  │  ├─ repository                                
+│  │        │  │  │  └─ MemberRepository.java                  
+│  │        │  │  ├─ service                                   
+│  │        │  │  │  └─ MemberService.java                     
+│  │        │  │  └─ Security.java                             
+│  │        │  └─ web                                          
+│  │        │     ├─ interceptor                               
+│  │        │     │  ├─ LogCheckInterceptor.java               
+│  │        │     │  └─ LogInterceptor.java                    
+│  │        │     ├─ login                                     
+│  │        │     │  ├─ loginform                              
+│  │        │     │  │  └─ LoginForm.java                      
+│  │        │     │  └─ LoginController.java                   
+│  │        │     ├─ member                                    
+│  │        │     │  └─ MemberController.java                  
+│  │        │     ├─ mypage                                    
+│  │        │     │  └─ MyPageController.java                  
+│  │        │     ├─ password                                  
+│  │        │     │  └─ PasswordController.java                
+│  │        │     └─ session                                   
+│  │        │        ├─ SessionConst.java                      
+│  │        │        └─ SessionService.java                    
+│  │        ├─ visitant                                        
+│  │        │  └─ domain                                       
+│  │        │     ├─ repository                                
+│  │        │     │  ├─ JdbcVisitRepository.java               
+│  │        │     │  └─ VisitRepository.java                   
+│  │        │     ├─ service                                   
+│  │        │     │  └─ VisitService.java                      
+│  │        │     └─ visit                                     
+│  │        │        └─ Visitant.java                          
+│  │        ├─ FootballApplication.java                        
+│  │        ├─ HomeController.java                             
+│  │        └─ WebConfig.java                                  
+│  └─ resources                                                
+│     ├─ csh                                                   
+│     │  └─ donation                                           
+│     │     └─ board                                           
+│     │        └─ domain                                       
+│     │           └─ repository                                
+│     │              └─ mybatis                                
+│     │                 └─ BoardMapper.xml                     
+│     ├─ static                                                
+│     │  ├─ css                                                
+│     │  │  ├─ addlogin                                        
+│     │  │  │  ├─ login.css                                    
+│     │  │  │  └─ sign.css                                     
+│     │  │  ├─ img                                             
+│     │  │  ├─ main                                            
+│     │  │  │  └─ main.css                                     
+│     │  │  ├─ mypage                                          
+│     │  │  │  └─ mypage.css                                   
+│     │  │  ├─ bootstrap.min.css                               
+│     │  │  └─ reset.css                                       
+│     │  └─ img                                                
+│     │     ├─ 0a624e63-be11-47de-bea5-59fb18981164.jpg        
+│     │     ├─ 0add84d2-4154-472c-a288-c361447bc36c.jpg        
+│     │     ├─ 1ca07f89-475a-413e-8a88-84aba2faf677.png        
+│     │     ├─ 45d8ef6c-fa91-481d-90ba-dfddef0385cc.png        
+│     │     ├─ 60774fc5-fb7a-4cad-82eb-731980173898.jpg        
+│     │     ├─ 66fc40f5-ec3a-4176-910b-e6419cedaf55.jpg        
+│     │     ├─ 6760e502-d69d-4fa4-b48a-3cdef3cd4dbe.png        
+│     │     ├─ 68715b3c-1b88-41ef-aef9-f459456b4274.jpg        
+│     │     ├─ 7273450e-b427-483a-9a95-20bdf23fd6c4.jpg        
+│     │     ├─ 749e5cea-05a8-481a-be9b-73fd84e83b23.png        
+│     │     ├─ ac292131-a130-44f1-940d-9ae085a733f2.png        
+│     │     ├─ basic.jpg                                       
+│     │     ├─ boardBasic.jpg                                  
+│     │     ├─ cf7475c4-7ddb-4fbb-a6c3-25b35e0720cb.jpeg       
+│     │     ├─ d14f16b5-ae25-4c00-9e13-e4188d0bea0f.png        
+│     │     ├─ d89f0710-e6a2-41f3-93f8-10cd8211a089.png        
+│     │     ├─ da71091e-c31c-4df4-addb-3f3790347522.png        
+│     │     ├─ e6641661-c9c7-45f8-b6d8-e3223b92f0da.jpg        
+│     │     ├─ home1.jpg                                       
+│     │     ├─ home2.jpg                                       
+│     │     ├─ icon.png                                        
+│     │     └─ 지진.jpg                                          
+│     ├─ templates                                             
+│     │  ├─ admin                                              
+│     │  │  ├─ admin.html                                      
+│     │  │  ├─ adminComment.html                               
+│     │  │  ├─ adminLogin.html                                 
+│     │  │  └─ adminMember.html                                
+│     │  ├─ board                                              
+│     │  │  ├─ board.html                                      
+│     │  │  ├─ boardCreate.html                                
+│     │  │  └─ boardEdit.html                                  
+│     │  ├─ css                                                
+│     │  │  └─ bootstrap.min.css                               
+│     │  ├─ error                                              
+│     │  │  ├─ 4xx.html                                        
+│     │  │  └─ 5xx.html                                        
+│     │  ├─ give                                               
+│     │  │  └─ give.html                                       
+│     │  ├─ header                                             
+│     │  │  ├─ header.html                                     
+│     │  │  └─ test.html                                       
+│     │  ├─ login                                              
+│     │  │  └─ loginForm.html                                  
+│     │  ├─ members                                            
+│     │  │  └─ addMemberForm.html                              
+│     │  ├─ mypage                                             
+│     │  │  ├─ my-page-edit.html                               
+│     │  │  └─ my-page.html                                    
+│     │  ├─ password                                           
+│     │  │  ├─ change-password.html                            
+│     │  │  ├─ forgot-password.html                            
+│     │  │  └─ tem.html                                        
+│     │  ├─ donationHome.html                                  
+│     │  ├─ error-page.html                                    
+│     │  ├─ freeHome.html                                      
+│     │  ├─ home.html                                          
+│     │  └─ loginHome.html                                     
+│     ├─ application.properties                                
+│     ├─ errors.properties                                     
+│     ├─ messages.properties                                   
+│     ├─ test.html                                             
+│     ├─ test2.html                                            
+│     └─ test3.html                                            
+└─ test                                                        
+   └─ java                                                     
+      └─ csh                                                   
+         └─ donation                                           
+            └─ FootballApplicationTests.java                   
 
 ## 📌 주요 기능
 #### 로그인/회원가입 
