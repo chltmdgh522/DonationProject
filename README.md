@@ -26,10 +26,10 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 ## 🕰️ 개발 기간
 * 23.11.2일 - 24.1.11일 (시험기간 제외 사실상 3주)
 
-### 🧑‍🤝‍🧑 맴버구성
+## 🧑‍🤝‍🧑 맴버구성
  -  최승호 - 백엔드, 디자이너, UI 개발, 기획, 포트포워딩(AWS 할려 했으나 비용 부족!)
    
-### ⚙️ 개발 환경
+## ⚙️ 개발 환경
 - **Language** : `Java 17, JavaScript`
 - **Framework** : `Springboot(3.0.2)`
   - `MySQL Driver, Lombok, Spring Data JdbcTemplate, Spring Data Jpa, Spring Security, Spring Web, Thymeleaf`
@@ -37,7 +37,7 @@ https://youtu.be/jTv9dnZsMHU?si=Wh4IGrgmM7nrS1gb
 - **ORM, SQLMapper** : `JdbcTemplate, MyBatis, JPA, Spring Data Jpa`
 - **IDE** : `IntellJ`
 
-### 📁파일 구조
+## 📁파일 구조
 src                                                            
 ├─ main                                                        
 │  ├─ generated                                                
